@@ -129,11 +129,13 @@ export async function apiRequest(prompt: string): Promise<Message> {
 
 export async function verifySession(): Promise<boolean> {
   try {
+    const cookieStore = await cookies();
+
     const req = await fetch("http://localhost:3000/auth/verify", {
       method: "GET",
       credentials: "include",
       headers: {
-        Cookie: cookies().toString(),
+        Cookie: cookieStore.toString(),
       },
     });
 
@@ -148,6 +150,7 @@ export async function verifySession(): Promise<boolean> {
 export async function logout(): Promise<boolean> {
   try {
     const cookieStore = await cookies();
+
     const req = await fetch("http://localhost:3000/auth/logout", {
       method: "POST",
       credentials: "include",
