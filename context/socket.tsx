@@ -2,6 +2,7 @@
 import React from "react";
 import io, { Socket } from "socket.io-client";
 import { toast } from "sonner";
+import { getFingerprint } from "@thumbmarkjs/thumbmarkjs";
 import { useGlobal } from "./global";
 import { Message } from "types/message";
 import { Error } from "types/error";
@@ -67,10 +68,13 @@ const SocketProvider = ({ children }: Props) => {
   }, [addMessage, updateStreamedMessage]);
 
   const sendMessage = React.useCallback(
-    (value: string) => {
+    async (value: string) => {
+      const visitorId = await getFingerprint();
+
       const message = {
         content: value,
         chatUuid: chatUuid ?? null,
+        visitorId,
       };
 
       setLoading(true);
@@ -83,18 +87,6 @@ const SocketProvider = ({ children }: Props) => {
     },
     [socket, chatUuid]
   );
-
-  // React.useEffect(() => {
-  //   const request = async () => {
-  //     const res = await fetch(`${config.apiUrl}/ai`, {
-  //       credentials: "include",
-  //       headers: { "Content-Type": "application/json" },
-  //     });
-  //     const data = await res.json();
-  //     console.log(data);
-  //   };
-  //   request();
-  // }, []);
 
   const socketProviderValue = React.useMemo(
     () => ({

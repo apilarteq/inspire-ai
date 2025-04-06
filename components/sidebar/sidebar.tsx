@@ -54,7 +54,7 @@ const SidebarClient: React.FC<PropsWithChildren<Props>> = ({
           <nav aria-label="Chats list">
             <ul className="space-y-2 overflow-y-auto pr-4 py-2">
               {chats.map((chat) => (
-                <li key={chat.uuid}>
+                <li key={chat._id}>
                   <button className="block p-2 rounded-md hover:bg-gray-700 transition-colors duration-200 cursor-pointer w-full text-left truncate">
                     {chat.title}
                   </button>

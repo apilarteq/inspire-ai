@@ -1,5 +1,5 @@
 export interface Chat {
-  uuid: string;
+  _id: string;
   title: string;
   createdAt: string;
 }

@@ -3,35 +3,26 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { Chat } from "types/chat";
 import { Message } from "types/message";
+import { config } from "../config";
 
 export async function loadChats(): Promise<Chat[] | null> {
   try {
-    // await fetch("https://dummyjson.com/users").then((res) => res.json());
+    const cookieStore = await cookies();
 
-    const chats: Chat[] = [
-      {
-        uuid: "1",
-        title: "Como robar pollos",
-        createdAt: "2022-01-17 17:25:04.019",
+    const req = await fetch(`${config.apiUrl}/chat`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Cookie: cookieStore.toString(),
       },
-      {
-        uuid: "2",
-        title: "Código de calidad",
-        createdAt: "2022-01-17 17:25:04.019",
-      },
-      {
-        uuid: "3",
-        title: "Sistemas de información",
-        createdAt: "2022-01-17 17:25:04.019",
-      },
-      {
-        uuid: "4",
-        title: "Aviones de la segunda guerra mundial",
-        createdAt: "2022-01-17 17:25:04.019",
-      },
-    ];
+    });
+    const response = await req.json();
 
-    return chats;
+    if (!response.success) {
+      return null;
+    }
+
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -131,28 +122,8 @@ export async function verifySession(): Promise<boolean> {
   try {
     const cookieStore = await cookies();
 
-    const req = await fetch("http://localhost:3000/auth/verify", {
+    const req = await fetch(`${config.apiUrl}/auth/verify`, {
       method: "GET",
-      credentials: "include",
-      headers: {
-        Cookie: cookieStore.toString(),
-      },
-    });
-
-    const response = await req.json();
-
-    return response.success;
-  } catch (error) {
-    throw error;
-  }
-}
-
-export async function logout(): Promise<boolean> {
-  try {
-    const cookieStore = await cookies();
-
-    const req = await fetch("http://localhost:3000/auth/logout", {
-      method: "POST",
       credentials: "include",
       headers: {
         Cookie: cookieStore.toString(),

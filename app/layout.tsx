@@ -30,7 +30,6 @@ export default async function RootLayout({
 }>) {
   const chats = await loadChats();
   const verify = await verifySession();
-  console.log("aqui", verify);
 
   return (
     <html lang="en">
@@ -47,7 +46,7 @@ export default async function RootLayout({
                 className="bg-primary transition-all duration-500 ease-in-out flex-1 relative overflow-y-auto flex flex-col"
               >
                 <Header isAuthenticated={verify} />
-                <div className="flex-1 overflow-y-auto">{children}</div>
+                <div className="flex-1 overflow-y-auto px-5">{children}</div>
                 <MessageBox />
               </section>
             </div>
