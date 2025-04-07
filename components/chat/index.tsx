@@ -10,14 +10,35 @@ interface Props {
 }
 
 const Chat = ({ messages }: Props) => {
-  const { setMessages } = useGlobal();
+  const [render, setRender] = React.useState<boolean>(false);
+  const messagedEndRef = React.useRef<HTMLDivElement>(null);
+  const { setMessages, messageBoxPosition } = useGlobal();
 
   React.useEffect(() => {
     setMessages(messages);
+    if (messagedEndRef.current) {
+      messagedEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   }, [setMessages, messages]);
 
+  React.useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    if (messageBoxPosition !== "bottom") {
+      timeout = setTimeout(() => {
+        setRender(true);
+      }, 700);
+    } else setRender(true);
+
+    return () => clearTimeout(timeout);
+  }, [messageBoxPosition]);
+
   return (
-    <div className="text-white w-full pb-[70px] xl:mt-5 lg:mt-[10px]">
+    <div
+      className={`text-white w-full pb-[70px] xl:mt-5 lg:mt-[10px] transition-opacity duration-1000 ${
+        render ? "opacity-100" : "opacity-0"
+      }`}
+    >
       {messages?.map((message: Message) =>
         message.role === "user" ? (
           <div
@@ -31,6 +52,7 @@ const Chat = ({ messages }: Props) => {
           <AssistantMessage key={message._id} content={message.content} />
         )
       )}
+      <div ref={messagedEndRef} />
     </div>
   );
 };

@@ -8,7 +8,7 @@ const MessageBox = () => {
 
   return (
     <div
-      className={`flex justify-center sticky transition-all duration-700 ease-in-out opacity-100 px-5 ${
+      className={`flex justify-center absolute w-full transition-all duration-700 ease-in-out opacity-100 px-5 ${
         messages.length === 0 ? "bottom-1/2 translate-y-1/2" : "bottom-10"
       }`}
     >

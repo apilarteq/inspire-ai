@@ -19,15 +19,15 @@ const SidebarClient: React.FC<PropsWithChildren<Props>> = ({
   const { toggleSidebar, openSidebar, setMessages } = useGlobal();
 
   const handleCreateChat = () => {
-    setMessages([]);
     router.push("/");
+    setMessages([]);
   };
 
   return (
     <aside
       aria-label="Sidebar"
       data-testid="sidebar"
-      className={`bg-sidebar text-gray-200 shadow-lg transition-all duration-500 ease-in-out shrink-0 ${
+      className={`bg-sidebar text-gray-200 shadow-lg transition-all duration-500 ease-in-out shrink-0 h-screen ${
         openSidebar && isAuthenticated
           ? "w-[240px] translate-x-0 opacity-100"
           : "w-0 -translate-x-full opacity-0"
@@ -75,7 +75,7 @@ const SidebarClient: React.FC<PropsWithChildren<Props>> = ({
           <h3>Still no chats</h3>
         ) : (
           <nav aria-label="Chats list">
-            <ul className="space-y-2 overflow-y-auto pr-4 py-2">
+            <ul className="space-y-2 overflow-y-auto h-[calc(100vh-60px)] pb-6 pr-4 py-2">
               {chats.map((chat) => (
                 <li key={chat._id}>
                   <Link href={`/chat/${chat._id}`}>

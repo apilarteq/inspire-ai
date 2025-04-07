@@ -6,10 +6,17 @@ import { useGlobal } from "context/global";
 import { Message } from "types/message";
 
 export default function App() {
+  const messagedEndRef = React.useRef<HTMLDivElement>(null);
   const { messages } = useGlobal();
 
+  React.useEffect(() => {
+    if (messagedEndRef.current) {
+      messagedEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   return (
-    <div className="text-white w-full pb-[70px] xl:mt-5 lg:mt-[10px]">
+    <div className="text-white w-full pb-[170px] xl:mt-5 lg:mt-[10px]">
       {messages?.map((message: Message) =>
         message.role === "user" ? (
           <div
@@ -23,6 +30,7 @@ export default function App() {
           <AssistantMessage key={message._id} content={message.content} />
         )
       )}
+      <div ref={messagedEndRef} />
     </div>
   );
 }

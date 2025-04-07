@@ -46,13 +46,13 @@ const SocketProvider = ({ children }: Props) => {
     newSocket.on("streamed-message", (data) => {
       if (data.isFirstChunk) {
         addMessage({
-          _id: data.uuid,
+          _id: data._id,
           content: data.content,
           createdAt: new Date().toISOString(),
           role: data.role,
         });
       } else {
-        updateStreamedMessage(data.uuid, data.content);
+        updateStreamedMessage(data._id, data.content);
       }
     });
 
