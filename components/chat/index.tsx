@@ -1,12 +1,20 @@
 "use client";
 import React from "react";
-import UserMessage from "components/messages/user";
-import AssistantMessage from "components/messages/assistant";
+import UserMessage from "../messages/user";
+import AssistantMessage from "../messages/assistant";
 import { useGlobal } from "context/global";
 import { Message } from "types/message";
 
-export default function App() {
-  const { messages } = useGlobal();
+interface Props {
+  messages: Message[];
+}
+
+const Chat = ({ messages }: Props) => {
+  const { setMessages } = useGlobal();
+
+  React.useEffect(() => {
+    setMessages(messages);
+  }, [setMessages, messages]);
 
   return (
     <div className="text-white w-full pb-[70px] xl:mt-5 lg:mt-[10px]">
@@ -25,4 +33,6 @@ export default function App() {
       )}
     </div>
   );
-}
+};
+
+export default Chat;

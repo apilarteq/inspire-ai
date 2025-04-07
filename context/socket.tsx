@@ -7,6 +7,7 @@ import { useGlobal } from "./global";
 import { Message } from "types/message";
 import { Error } from "types/error";
 import { config } from "../config";
+import { revalidate } from "utils/actions";
 
 interface SocketProps {
   socket: Socket;
@@ -45,7 +46,7 @@ const SocketProvider = ({ children }: Props) => {
     newSocket.on("streamed-message", (data) => {
       if (data.isFirstChunk) {
         addMessage({
-          uuid: data.uuid,
+          _id: data.uuid,
           content: data.content,
           createdAt: new Date().toISOString(),
           role: data.role,
@@ -57,6 +58,7 @@ const SocketProvider = ({ children }: Props) => {
 
     newSocket.on("end-streamed-message", (data: { chatUuid?: string }) => {
       setLoading(false);
+      revalidate("/");
       if (data?.chatUuid) setChatUuid(data.chatUuid);
     });
 

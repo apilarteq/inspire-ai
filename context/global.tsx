@@ -8,6 +8,7 @@ interface GlobalContextProps {
   messages: Message[];
   addMessage: (message: Message) => void;
   updateStreamedMessage: (uuid: string, content: string) => void;
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
 }
 
 interface Props {
@@ -33,10 +34,10 @@ const GlobalProvider = ({ children }: Props) => {
   );
 
   const updateStreamedMessage = React.useCallback(
-    (uuid: string, content: string) => {
+    (_id: string, content: string) => {
       setMessages((prevMessages) =>
         prevMessages.map((msg) =>
-          msg.uuid === uuid ? { ...msg, content: msg.content + content } : msg
+          msg._id === _id ? { ...msg, content: msg.content + content } : msg
         )
       );
     },
@@ -50,6 +51,7 @@ const GlobalProvider = ({ children }: Props) => {
       messages,
       addMessage,
       updateStreamedMessage,
+      setMessages,
     }),
     [openSidebar, toggleSidebar, messages, addMessage, updateStreamedMessage]
   );

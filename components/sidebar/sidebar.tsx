@@ -1,6 +1,8 @@
 "use client";
 import React, { PropsWithChildren } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { Chat } from "types/chat";
 import { useGlobal } from "context/global";
 
@@ -13,7 +15,13 @@ const SidebarClient: React.FC<PropsWithChildren<Props>> = ({
   chats,
   isAuthenticated,
 }) => {
-  const { toggleSidebar, openSidebar } = useGlobal();
+  const router = useRouter();
+  const { toggleSidebar, openSidebar, setMessages } = useGlobal();
+
+  const handleCreateChat = () => {
+    setMessages([]);
+    router.push("/");
+  };
 
   return (
     <aside
@@ -27,19 +35,34 @@ const SidebarClient: React.FC<PropsWithChildren<Props>> = ({
     >
       <div className="flex h-full flex-col pl-2">
         <header className="flex justify-between items-center py-4 px-2">
-          <button
-            onClick={toggleSidebar}
-            className="p-1 rounded-md hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
-            aria-label="Close Sidebar"
-            data-testid="close-sidebar"
-          >
-            <Image
-              alt="Close sidebar icon"
-              src="/sidebar-icon.svg"
-              width={26}
-              height={26}
-            />
-          </button>
+          <div className="flex gap-x-4 items-center">
+            <button
+              onClick={toggleSidebar}
+              className="p-1 rounded-md hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
+              aria-label="Close Sidebar"
+              data-testid="close-sidebar"
+            >
+              <Image
+                alt="Close sidebar icon"
+                src="/sidebar-icon.svg"
+                width={26}
+                height={26}
+              />
+            </button>
+            <button
+              onClick={handleCreateChat}
+              className="p-1 rounded-md hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
+              aria-label="Create new chat"
+              data-testid="create-chat"
+            >
+              <Image
+                alt="Create New Chat Icon"
+                src="/pencil.svg"
+                width={26}
+                height={26}
+              />
+            </button>
+          </div>
           <button
             className="p-1 rounded-md hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
             aria-label="Open Search Modal"
@@ -55,9 +78,11 @@ const SidebarClient: React.FC<PropsWithChildren<Props>> = ({
             <ul className="space-y-2 overflow-y-auto pr-4 py-2">
               {chats.map((chat) => (
                 <li key={chat._id}>
-                  <button className="block p-2 rounded-md hover:bg-gray-700 transition-colors duration-200 cursor-pointer w-full text-left truncate">
-                    {chat.title}
-                  </button>
+                  <Link href={`/chat/${chat._id}`}>
+                    <button className="block p-2 rounded-md hover:bg-gray-700 transition-colors duration-200 cursor-pointer w-full text-left truncate">
+                      {chat.title}
+                    </button>
+                  </Link>
                 </li>
               ))}
             </ul>
