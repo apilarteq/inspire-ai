@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Mulish } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 import Providers from "./providers";
@@ -11,6 +11,12 @@ import { loadGroupedChats, verifySession } from "utils/actions";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+const mulish = Mulish({
+  variable: "--font-mulish",
+  subsets: ["latin"],
+  weight: ["400"],
 });
 
 const geistMono = Geist_Mono({
@@ -34,7 +40,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${mulish.className} antialiased`}
       >
         <Providers>
           <Toaster />
@@ -49,7 +55,9 @@ export default async function RootLayout({
                 className="bg-primary transition-all duration-500 ease-in-out flex-1 relative flex flex-col h-full"
               >
                 <Header isAuthenticated={verify} />
-                <div className="flex-1 overflow-y-auto px-5">{children}</div>
+                <div className="overflow-y-auto px-5 h-[calc(100vh-200px)]">
+                  {children}
+                </div>
                 <MessageBox />
               </section>
             </div>

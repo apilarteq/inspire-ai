@@ -35,7 +35,7 @@ const Chat = ({ messages }: Props) => {
 
   return (
     <div
-      className={`text-white w-full pb-[70px] xl:mt-5 lg:mt-[10px] transition-opacity duration-1000 ${
+      className={`text-white w-full xl:mt-5 lg:mt-[10px] transition-opacity duration-1000 ${
         render ? "opacity-100" : "opacity-0"
       }`}
     >
