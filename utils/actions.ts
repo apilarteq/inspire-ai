@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import { Chat } from "types/chat";
+import { Chat, GroupedChats } from "types/chat";
 import { Message } from "types/message";
 import { config } from "../config";
 
@@ -33,6 +33,29 @@ export async function loadChat(uuid: string): Promise<Chat | null> {
     const cookieStore = await cookies();
 
     const req = await fetch(`${config.apiUrl}/chat/${uuid}`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+    });
+    const response = await req.json();
+
+    if (!response.success) {
+      return null;
+    }
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function loadGroupedChats(): Promise<GroupedChats[] | null> {
+  try {
+    const cookieStore = await cookies();
+
+    const req = await fetch(`${config.apiUrl}/chat/grouped`, {
       method: "GET",
       credentials: "include",
       headers: {

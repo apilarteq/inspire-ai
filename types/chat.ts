@@ -6,3 +6,8 @@ export interface Chat {
   createdAt: string;
   messages?: Message[];
 }
+
+export interface GroupedChats {
+  date: string;
+  chats: Chat[];
+}

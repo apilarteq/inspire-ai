@@ -5,8 +5,8 @@ import "./globals.css";
 import Providers from "./providers";
 import Header from "components/header";
 import MessageBox from "components/message-box";
-import SidebarServer from "components/sidebar";
-import { loadChats, verifySession } from "utils/actions";
+import Sidebar from "components/sidebar";
+import { loadGroupedChats, verifySession } from "utils/actions";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +28,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const chats = await loadChats();
+  const groupedChats = await loadGroupedChats();
   const verify = await verifySession();
 
   return (
@@ -40,7 +40,10 @@ export default async function RootLayout({
           <Toaster />
           <main className="h-screen w-full bg-sidebar overflow-hidden text-black">
             <div className="flex h-full w-full">
-              <SidebarServer chats={chats ?? []} isAuthenticated={verify} />
+              <Sidebar
+                groupedChats={groupedChats ?? []}
+                isAuthenticated={verify}
+              />
               <section
                 data-testid="content"
                 className="bg-primary transition-all duration-500 ease-in-out flex-1 relative flex flex-col h-full"
