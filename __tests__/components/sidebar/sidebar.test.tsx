@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import SidebarClient from "components/sidebar/sidebar";
+import SidebarClient from "components/sidebar";
 import { useGlobal } from "context/global";
 
 jest.mock("context/global", () => ({

@@ -1,7 +1,7 @@
 export type Role = "user" | "assistant";
 
 export interface Message {
-  uuid: string;
+  _id: string;
   content: string;
   createdAt: string;
   role: Role;

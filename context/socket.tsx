@@ -2,10 +2,12 @@
 import React from "react";
 import io, { Socket } from "socket.io-client";
 import { toast } from "sonner";
+import { getFingerprint } from "@thumbmarkjs/thumbmarkjs";
 import { useGlobal } from "./global";
 import { Message } from "types/message";
 import { Error } from "types/error";
 import { config } from "../config";
+import { revalidate } from "utils/actions";
 
 interface SocketProps {
   socket: Socket;
@@ -44,18 +46,19 @@ const SocketProvider = ({ children }: Props) => {
     newSocket.on("streamed-message", (data) => {
       if (data.isFirstChunk) {
         addMessage({
-          uuid: data.uuid,
+          _id: data._id,
           content: data.content,
           createdAt: new Date().toISOString(),
           role: data.role,
         });
       } else {
-        updateStreamedMessage(data.uuid, data.content);
+        updateStreamedMessage(data._id, data.content);
       }
     });
 
     newSocket.on("end-streamed-message", (data: { chatUuid?: string }) => {
       setLoading(false);
+      revalidate("/");
       if (data?.chatUuid) setChatUuid(data.chatUuid);
     });
 
@@ -67,10 +70,13 @@ const SocketProvider = ({ children }: Props) => {
   }, [addMessage, updateStreamedMessage]);
 
   const sendMessage = React.useCallback(
-    (value: string) => {
+    async (value: string) => {
+      const visitorId = await getFingerprint();
+
       const message = {
         content: value,
         chatUuid: chatUuid ?? null,
+        visitorId,
       };
 
       setLoading(true);
@@ -83,18 +89,6 @@ const SocketProvider = ({ children }: Props) => {
     },
     [socket, chatUuid]
   );
-
-  // React.useEffect(() => {
-  //   const request = async () => {
-  //     const res = await fetch(`${config.apiUrl}/ai`, {
-  //       credentials: "include",
-  //       headers: { "Content-Type": "application/json" },
-  //     });
-  //     const data = await res.json();
-  //     console.log(data);
-  //   };
-  //   request();
-  // }, []);
 
   const socketProviderValue = React.useMemo(
     () => ({

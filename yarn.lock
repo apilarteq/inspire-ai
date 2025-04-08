@@ -1020,6 +1020,11 @@
   dependencies:
     "@babel/runtime" "^7.12.5"
 
+"@thumbmarkjs/thumbmarkjs@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@thumbmarkjs/thumbmarkjs/-/thumbmarkjs-0.20.0.tgz#67fba7cf28f43ff2206956b21bd888216c7e14d0"
+  integrity sha512-NCCHruUQklOkTh2Ne5FCUf+GzEZt+XbCVYtYSFE30N5MJ7EczYB46mqOwLcV1wuOEZTMH6nCgYbE3aBbAAnjVg==
+
 "@tootallnate/once@2":
   version "2.0.0"
   resolved "https://registry.npmjs.org/@tootallnate/once/-/once-2.0.0.tgz"

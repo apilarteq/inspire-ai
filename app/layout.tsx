@@ -1,16 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Mulish } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 import Providers from "./providers";
 import Header from "components/header";
 import MessageBox from "components/message-box";
-import SidebarServer from "components/sidebar";
-import { loadChats, verifySession } from "utils/actions";
+import Sidebar from "components/sidebar";
+import { loadGroupedChats, verifySession } from "utils/actions";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+const mulish = Mulish({
+  variable: "--font-mulish",
+  subsets: ["latin"],
+  weight: ["400"],
 });
 
 const geistMono = Geist_Mono({
@@ -28,26 +34,30 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const chats = await loadChats();
+  const groupedChats = await loadGroupedChats();
   const verify = await verifySession();
-  console.log("aqui", verify);
 
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${mulish.className} antialiased`}
       >
         <Providers>
           <Toaster />
           <main className="h-screen w-full bg-sidebar overflow-hidden text-black">
             <div className="flex h-full w-full">
-              <SidebarServer chats={chats ?? []} isAuthenticated={verify} />
+              <Sidebar
+                groupedChats={groupedChats ?? []}
+                isAuthenticated={verify}
+              />
               <section
                 data-testid="content"
-                className="bg-primary transition-all duration-500 ease-in-out flex-1 relative overflow-y-auto flex flex-col"
+                className="bg-primary transition-all duration-500 ease-in-out flex-1 relative flex flex-col h-full"
               >
                 <Header isAuthenticated={verify} />
-                <div className="flex-1 overflow-y-auto">{children}</div>
+                <div className="overflow-y-auto px-5 h-[calc(100vh-200px)]">
+                  {children}
+                </div>
                 <MessageBox />
               </section>
             </div>
