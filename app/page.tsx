@@ -4,11 +4,11 @@ import Chat from "components/chat";
 import { useGlobal } from "context/global";
 
 export default function App() {
-  const { setMessages } = useGlobal();
+  const { messages, setMessages } = useGlobal();
 
   React.useEffect(() => {
     setMessages([]);
   }, []);
 
-  return <Chat messages={null} />;
+  return <Chat messages={messages} />;
 }
