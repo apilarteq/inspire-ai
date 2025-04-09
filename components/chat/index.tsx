@@ -6,7 +6,7 @@ import { useGlobal } from "context/global";
 import { Message } from "types/message";
 
 interface Props {
-  messages: Message[];
+  messages: Message[] | null;
 }
 
 const Chat = ({ messages }: Props) => {
@@ -15,6 +15,8 @@ const Chat = ({ messages }: Props) => {
   const { setMessages, messageBoxPosition } = useGlobal();
 
   React.useEffect(() => {
+    if (!messages) return;
+
     setMessages(messages);
     if (messagedEndRef.current) {
       messagedEndRef.current.scrollIntoView({ behavior: "smooth" });

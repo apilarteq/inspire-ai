@@ -1,7 +1,7 @@
 "use client";
 import React, { PropsWithChildren } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { GroupedChats } from "types/chat";
 import { useGlobal } from "context/global";
 import SidebarChats from "./chats";
@@ -15,13 +15,7 @@ const Sidebar: React.FC<PropsWithChildren<Props>> = ({
   groupedChats,
   isAuthenticated,
 }) => {
-  const router = useRouter();
-  const { toggleSidebar, openSidebar, setMessages } = useGlobal();
-
-  const handleCreateChat = () => {
-    router.push("/");
-    setMessages([]);
-  };
+  const { toggleSidebar, openSidebar } = useGlobal();
 
   return (
     <aside
@@ -49,8 +43,8 @@ const Sidebar: React.FC<PropsWithChildren<Props>> = ({
                 height={26}
               />
             </button>
-            <button
-              onClick={handleCreateChat}
+            <Link
+              href="/"
               className="p-1 rounded-md hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
               aria-label="Create new chat"
               data-testid="create-chat"
@@ -61,7 +55,7 @@ const Sidebar: React.FC<PropsWithChildren<Props>> = ({
                 width={26}
                 height={26}
               />
-            </button>
+            </Link>
           </div>
           <button
             className="p-1 rounded-md hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
