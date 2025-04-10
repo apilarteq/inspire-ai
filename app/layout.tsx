@@ -44,7 +44,7 @@ export default async function RootLayout({
       >
         <Providers>
           <Toaster />
-          <main className="h-screen w-full bg-sidebar overflow-hidden text-black">
+          <main className="h-screen w-full bg-sidebar text-black">
             <div className="flex h-full w-full">
               <Sidebar
                 groupedChats={groupedChats ?? []}
@@ -52,12 +52,10 @@ export default async function RootLayout({
               />
               <section
                 data-testid="content"
-                className="bg-primary transition-all duration-500 ease-in-out flex-1 relative flex flex-col h-full"
+                className="bg-primary transition-all duration-500 ease-in-out flex-1 relative flex flex-col h-full overflow-y-auto"
               >
                 <Header isAuthenticated={verify} />
-                <div className="overflow-y-auto px-5 h-[calc(100vh-200px)]">
-                  {children}
-                </div>
+                <div className="px-5 flex-1 flex flex-col">{children}</div>
                 <MessageBox />
               </section>
             </div>

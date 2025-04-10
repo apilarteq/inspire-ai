@@ -22,9 +22,7 @@ const Sidebar: React.FC<PropsWithChildren<Props>> = ({
       aria-label="Sidebar"
       data-testid="sidebar"
       className={`bg-sidebar text-gray-200 shadow-lg transition-all duration-500 ease-in-out shrink-0 h-screen ${
-        openSidebar && isAuthenticated
-          ? "w-[240px] translate-x-0 opacity-100"
-          : "w-0 -translate-x-full opacity-0"
+        openSidebar && isAuthenticated ? "w-[240px]" : "w-0"
       }`}
     >
       <div className="flex h-full flex-col pl-2">
