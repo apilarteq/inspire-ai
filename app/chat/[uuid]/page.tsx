@@ -1,6 +1,6 @@
 import React from "react";
 import Chat from "components/chat";
-import { loadChat } from "utils/actions";
+import { loadChat } from "utils/api";
 
 interface Props {
   params: Promise<{ uuid: string }>;

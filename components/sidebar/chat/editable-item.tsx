@@ -1,6 +1,7 @@
 import React from "react";
 import { toast } from "sonner";
-import { revalidate, updateChatTitle } from "utils/actions";
+import { updateChatTitle } from "utils/api";
+import { revalidate } from "utils/lib/revalidation";
 
 interface Props {
   uuid: string;

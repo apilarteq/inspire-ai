@@ -6,8 +6,8 @@ import { getFingerprint } from "@thumbmarkjs/thumbmarkjs";
 import { useGlobal } from "./global";
 import { Message } from "types/message";
 import { Error } from "types/error";
-import { config } from "../config";
-import { revalidate } from "utils/actions";
+import { config } from "config";
+import { revalidate } from "utils/lib/revalidation";
 
 interface SocketProps {
   socket: Socket;

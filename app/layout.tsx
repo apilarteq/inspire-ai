@@ -6,7 +6,7 @@ import Providers from "./providers";
 import Header from "components/header";
 import MessageBox from "components/message-box";
 import Sidebar from "components/sidebar";
-import { loadGroupedChats, verifySession } from "utils/actions";
+import { loadGroupedChats, verifySession } from "utils/api";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

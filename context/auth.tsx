@@ -3,7 +3,7 @@ import React from "react";
 import { AuthResponse, LoginFormData, RegisterFormData } from "types/auth";
 import { User } from "types/user";
 import { config } from "config";
-import { revalidate } from "utils/actions";
+import { revalidate } from "utils/lib/revalidation";
 
 interface AuthContextProps {
   user: User | null;
