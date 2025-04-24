@@ -40,7 +40,7 @@ const SocketProvider = ({ children }: Props) => {
 
     newSocket.on("error", (error: Error) => {
       setLoading(false);
-      toast.error(error.message, { position: "top-center" });
+      toast.error(error.message);
     });
 
     newSocket.on("streamed-message", (data) => {
