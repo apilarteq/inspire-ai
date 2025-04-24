@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import SidebarChatOptions from "./dropdown-options";
 import { truncate } from "utils/functions";
 import { DropdownAction } from "types/dropdown";
+import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 
 interface Props {
   uuid: string;
@@ -41,7 +41,7 @@ const SidebarChatItem = ({ uuid, title, currentUuid, ...props }: Props) => {
           props.selectedUuid === uuid && "bg-[#444444]"
         }`}
       >
-        <Image alt="dots" src="/dots.svg" width={25} height={25} />
+        <EllipsisHorizontalIcon className="w-5 h-5" />
       </button>
       {props.selectedUuid === uuid && (
         <SidebarChatOptions
