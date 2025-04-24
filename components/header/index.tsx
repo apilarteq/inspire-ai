@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import Image from "next/image";
-import { useGlobal } from "context/global";
+import { ViewColumnsIcon } from "@heroicons/react/24/outline";
 import HeaderAuthButtons from "./auth-buttons";
-import { useAuth } from "@/context/auth";
+import { useGlobal } from "context/global";
+import { useAuth } from "context/auth";
 
 interface Props {
   isAuthenticated: boolean;
@@ -33,13 +33,7 @@ const Header = ({ isAuthenticated }: Props) => {
                 aria-label="Open Sidebar"
                 data-testid="open-sidebar"
               >
-                <Image
-                  alt="Open sidebar icon"
-                  src="/sidebar-icon.svg"
-                  width={26}
-                  height={26}
-                  className="rotate-180"
-                />
+                <ViewColumnsIcon className="w-6 h-6 text-secondary" />
               </button>
               <h1 className="text-xl font-bold">Inspire AI</h1>
             </div>

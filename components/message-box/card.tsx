@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import { GlobeAltIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import Textarea from "./input";
 import Spinner from "../utils/spinner";
 import useTextarea from "hooks/useTextarea";
@@ -10,7 +10,7 @@ const MessageBoxCard = () => {
   const { loading } = useSocket();
 
   return (
-    <div className="w-full bg-sidebar rounded-xl p-3 text-left text-gray-300 space-y-5">
+    <div className="w-full bg-sidebar rounded-xl p-3 text-left text-gray-300 space-y-3">
       <Textarea
         onInput={handleInput}
         ref={textareaRef}
@@ -18,20 +18,15 @@ const MessageBoxCard = () => {
         placeholder="Type a message..."
       />
       <div className="flex items-center justify-between">
-        <div className="w-[35px] h-[35px] rounded-md p-1 cursor-pointer hover:bg-gray-100 transition duration-300 ease-in-out">
-          <Image alt="Globe icon" src="/globe.svg" width={35} height={35} />
+        <div className="rounded-md p-1 cursor-pointer hover:bg-gray-100 transition duration-300 ease-in-out">
+          <GlobeAltIcon className="w-6 h-6 text-secondary" />
         </div>
         <button type="button" data-testid="submit-button" onClick={onSubmit}>
-          <div className="w-[35px] h-[35px] rounded-md hover:bg-gray-100 transition duration-300 ease-in-out cursor-pointer p-1">
+          <div className="rounded-md hover:bg-gray-100 transition duration-300 ease-in-out cursor-pointer p-1">
             {loading ? (
               <Spinner />
             ) : (
-              <Image
-                alt="Send message icon"
-                src="/send.svg"
-                width={35}
-                height={35}
-              />
+              <PaperAirplaneIcon className="w-6 h-6 text-secondary" />
             )}
           </div>
         </button>

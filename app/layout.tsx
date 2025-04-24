@@ -43,7 +43,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${mulish.className} antialiased`}
       >
         <Providers>
-          <Toaster />
+          <Toaster position="top-center" />
           <main className="h-screen w-full bg-sidebar text-black">
             <div className="flex h-full w-full">
               <Sidebar

@@ -74,6 +74,32 @@ export async function loadGroupedChats(): Promise<GroupedChats[] | null> {
   }
 }
 
+export async function updateChatTitle(
+  uuid: string,
+  title: string
+): Promise<boolean> {
+  try {
+    const cookieStore = await cookies();
+
+    const req = await fetch(`${config.apiUrl}/chat/${uuid}`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: {
+        Cookie: cookieStore.toString(),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title }),
+    });
+
+    const response = await req.json();
+
+    return response.success;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
 export async function apiRequest(prompt: string): Promise<Message> {
   try {
     const response = await fetch("http://localhost:3000/ai/chat", {

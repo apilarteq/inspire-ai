@@ -1,10 +1,14 @@
 "use client";
 import React, { PropsWithChildren } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import {
+  MagnifyingGlassIcon,
+  PencilSquareIcon,
+  ViewColumnsIcon,
+} from "@heroicons/react/24/outline";
+import SidebarChats from "./chat";
 import { GroupedChats } from "types/chat";
 import { useGlobal } from "context/global";
-import SidebarChats from "./chats";
 
 interface Props {
   groupedChats: GroupedChats[];
@@ -34,12 +38,7 @@ const Sidebar: React.FC<PropsWithChildren<Props>> = ({
               aria-label="Close Sidebar"
               data-testid="close-sidebar"
             >
-              <Image
-                alt="Close sidebar icon"
-                src="/sidebar-icon.svg"
-                width={26}
-                height={26}
-              />
+              <ViewColumnsIcon className="w-6 h-6 text-secondary" />
             </button>
             <Link
               href="/"
@@ -47,12 +46,7 @@ const Sidebar: React.FC<PropsWithChildren<Props>> = ({
               aria-label="Create new chat"
               data-testid="create-chat"
             >
-              <Image
-                alt="Create New Chat Icon"
-                src="/pencil.svg"
-                width={26}
-                height={26}
-              />
+              <PencilSquareIcon className="w-6 h-6 text-secondary" />
             </Link>
           </div>
           <button
@@ -60,7 +54,7 @@ const Sidebar: React.FC<PropsWithChildren<Props>> = ({
             aria-label="Open Search Modal"
             data-testid="open-search-modal"
           >
-            <Image alt="Search icon" src="/search.svg" width={26} height={26} />
+            <MagnifyingGlassIcon className="w-6 h-6 text-secondary" />
           </button>
         </header>
         <SidebarChats groupedChats={groupedChats} />
