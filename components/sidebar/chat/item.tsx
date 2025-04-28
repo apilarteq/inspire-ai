@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
+import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 import SidebarChatOptions from "./dropdown-options";
 import { truncate } from "utils/functions";
 import { DropdownAction } from "types/dropdown";
-import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 
 interface Props {
   uuid: string;
@@ -29,7 +29,7 @@ const SidebarChatItem = ({ uuid, title, currentUuid, ...props }: Props) => {
         className="w-[calc(100%-20px)]"
       >
         <button
-          className="block p-2 w-full text-left cursor-pointer"
+          className="block p-2 w-full text-left cursor-pointer text-nowrap"
           disabled={currentUuid === uuid}
         >
           {truncate(title, 20)}

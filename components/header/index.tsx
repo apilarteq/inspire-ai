@@ -15,7 +15,7 @@ const Header = ({ isAuthenticated }: Props) => {
 
   return (
     <header className="sticky top-0 w-full z-10 text-gray-100">
-      <div className="w-full px-6">
+      <div className="w-full px-4">
         <div className="flex justify-between items-center h-16 relative w-full">
           <div className="flex items-center">
             <div
