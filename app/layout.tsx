@@ -44,21 +44,21 @@ export default async function RootLayout({
       >
         <Providers>
           <Toaster position="top-center" />
-          <main className="h-screen w-full bg-sidebar text-black">
-            <div className="flex h-full w-full">
+          <main className="bg-sidebar text-black">
+            <Header isAuthenticated={verify} />
+            <section
+              data-testid="content"
+              className="bg-primary transition-all duration-500 ease-in-out flex-1 relative flex h-[calc(100vh-65px)] w-full"
+            >
               <Sidebar
                 groupedChats={groupedChats ?? []}
                 isAuthenticated={verify}
               />
-              <section
-                data-testid="content"
-                className="bg-primary transition-all duration-500 ease-in-out flex-1 relative flex flex-col h-full overflow-y-auto"
-              >
-                <Header isAuthenticated={verify} />
-                <div className="px-5 flex-1 flex flex-col">{children}</div>
+              <div className="relative overflow-y-auto w-full">
+                {children}
                 <MessageBox />
-              </section>
-            </div>
+              </div>
+            </section>
           </main>
         </Providers>
         <div id="modal-root" />

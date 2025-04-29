@@ -14,16 +14,16 @@ const SidebarChatOptions = ({ handleClickOutside, handleAction }: Props) => {
         onClick={handleClickOutside}
       />
 
-      <div className="absolute right-0 top-12 w-42 bg-[#2c2c2c] flex flex-col justify-center rounded-md z-20 text-gray-100">
+      <div className="absolute right-0 top-12 w-42 bg-zinc-900 border-zinc-800 border flex flex-col justify-center rounded-md z-20 text-gray-100">
         <button
           onClick={() => handleAction("rename")}
-          className="block px-4 py-2 text-sm hover:bg-[#3c3939] cursor-pointer"
+          className="block px-4 py-2 text-sm text-zinc-100 hover:bg-zinc-800 cursor-pointer rounded-t-md"
         >
           Cambiar nombre
         </button>
         <button
           onClick={() => handleAction("delete")}
-          className="block px-4 py-2 text-sm text-red-500 hover:bg-[#3c3939] cursor-pointer"
+          className="block px-4 py-2 text-sm text-red-500 hover:bg-zinc-800 cursor-pointer rounded-b-md"
         >
           Eliminar
         </button>

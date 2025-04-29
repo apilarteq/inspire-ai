@@ -25,12 +25,14 @@ const Sidebar: React.FC<PropsWithChildren<Props>> = ({
     <aside
       aria-label="Sidebar"
       data-testid="sidebar"
-      className={`bg-sidebar text-gray-200 shadow-lg transition-all duration-500 ease-in-out shrink-0 h-screen ${
-        openSidebar && isAuthenticated ? "w-[240px]" : "w-0"
+      className={`bg-sidebar text-gray-200 shadow-lg transition-[width] duration-500 ease-in-out shrink-0 sticky ${
+        openSidebar && isAuthenticated
+          ? "w-[240px] border-r border-zinc-800"
+          : "w-0 overflow-hidden"
       }`}
     >
       <div className="flex h-full flex-col pl-2">
-        <header className="flex justify-between items-center py-4 px-2">
+        <header className="flex overflow-hidden justify-between items-center py-4 px-2">
           <div className="flex gap-x-4 items-center">
             <button
               onClick={toggleSidebar}

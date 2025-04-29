@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 import { AuthResponse, LoginFormData, RegisterFormData } from "types/auth";
 import { User } from "types/user";
 import { config } from "config";
@@ -22,6 +23,7 @@ export const useAuth = () => React.useContext(AuthContext);
 
 const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = React.useState<User | null>(null);
+  const router = useRouter();
 
   const handleLogin = React.useCallback(
     async ({
@@ -94,6 +96,7 @@ const AuthProvider = ({ children }: Props) => {
 
       setUser(null);
       revalidate("/");
+      router.push("/");
       return { success };
     } catch (error) {
       return { error: JSON.stringify(error) };

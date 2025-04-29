@@ -19,8 +19,10 @@ const SidebarChatItem = ({ uuid, title, currentUuid, ...props }: Props) => {
   return (
     <li
       key={uuid}
-      className={`flex items-center rounded-md hover:bg-[#3c3939] active:bg-[#342f2f] transition-colors duration-200 cursor-pointer relative ${
-        currentUuid === uuid && "bg-[#474646]"
+      className={`flex items-center rounded-md transition-colors duration-200 cursor-pointer relative ${
+        currentUuid === uuid
+          ? "bg-purple-900/30 hover:bg-purple-900/40 active:bg-purple-900/60 !text-purple-300"
+          : "hover:bg-zinc-800 text-zinc-400"
       }`}
     >
       <Link
@@ -37,8 +39,8 @@ const SidebarChatItem = ({ uuid, title, currentUuid, ...props }: Props) => {
       </Link>
       <button
         onClick={() => props.handleSelectChat(uuid)}
-        className={`cursor-pointer hover:bg-[#444444] rounded-full mr-1 ${
-          props.selectedUuid === uuid && "bg-[#444444]"
+        className={`cursor-pointer hover:bg-purple-900/60 rounded-full mr-1 ${
+          props.selectedUuid === uuid && "bg-purple-900/60"
         }`}
       >
         <EllipsisHorizontalIcon className="w-5 h-5" />

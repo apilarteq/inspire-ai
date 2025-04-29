@@ -6,16 +6,30 @@ import useTextarea from "hooks/useTextarea";
 import { useSocket } from "context/socket";
 
 const MessageBoxCard = () => {
-  const { handleInput, textareaRef, onPressKey, onSubmit } = useTextarea();
+  const {
+    handleInput,
+    textareaRef,
+    onPressKey,
+    onSubmit,
+    isFocused,
+    onFocus,
+    onBlur,
+  } = useTextarea();
   const { loading } = useSocket();
 
   return (
-    <div className="w-full bg-sidebar rounded-xl p-3 text-left text-gray-300 space-y-3">
+    <div
+      className={`w-full bg-[#18181b] rounded-xl p-3 text-left text-gray-300 space-y-3 ${
+        isFocused && "ring-2 ring-secondary"
+      }`}
+    >
       <Textarea
         onInput={handleInput}
         ref={textareaRef}
         onKeyDown={onPressKey}
-        placeholder="Type a message..."
+        placeholder="Pregunta lo que gustes"
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
       <div className="flex items-center justify-between">
         <div className="rounded-md p-1 cursor-pointer hover:bg-gray-100 transition duration-300 ease-in-out">
