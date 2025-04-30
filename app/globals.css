@@ -65,3 +65,11 @@ body {
   content: attr(data-placeholder);
   color: grey;
 }
+
+.markdown p:first-of-type {
+  margin-top: 0;
+}
+
+.markdown p:last-of-type {
+  margin-bottom: 0;
+}

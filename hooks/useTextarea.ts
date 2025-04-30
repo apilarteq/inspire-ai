@@ -9,6 +9,7 @@ interface Response {
   isFocused: boolean;
   onFocus: () => void;
   onBlur: () => void;
+  focus: () => void;
 }
 
 export default function useTextarea(): Response {
@@ -57,6 +58,7 @@ export default function useTextarea(): Response {
 
   const onFocus = () => setIsFocused(true);
   const onBlur = () => setIsFocused(false);
+  const focus = () => textareaRef.current?.focus();
 
   return {
     handleInput,
@@ -66,5 +68,6 @@ export default function useTextarea(): Response {
     isFocused,
     onFocus,
     onBlur,
+    focus,
   };
 }

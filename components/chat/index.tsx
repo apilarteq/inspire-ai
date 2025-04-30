@@ -20,7 +20,7 @@ const Chat = ({ messages }: Props) => {
     setMessages(messages);
     requestAnimationFrame(() => {
       if (messagedEndRef.current) {
-        messagedEndRef.current.scrollIntoView({ behavior: "smooth" });
+        messagedEndRef.current.scrollIntoView({ behavior: "instant" });
       }
     });
   }, [setMessages, messages]);
@@ -33,19 +33,13 @@ const Chat = ({ messages }: Props) => {
     messages &&
     messages.length > 0 && (
       <div
-        className={`text-white w-full transition-opacity duration-1000 pb-5 min-h-[calc(100vh-200px)] ${
+        className={`text-white w-full transition-opacity duration-1000 min-h-[calc(100vh-200px)] space-y-6 mt-5 ${
           render ? "opacity-100" : "opacity-0"
         }`}
       >
         {messages?.map((message: Message) =>
           message.role === "user" ? (
-            <div
-              key={message._id}
-              data-testid={message._id}
-              className="flex max-w-3xl mx-auto justify-end py-5"
-            >
-              <UserMessage key={message._id} content={message.content} />
-            </div>
+            <UserMessage key={message._id} content={message.content} />
           ) : (
             <AssistantMessage key={message._id} content={message.content} />
           )

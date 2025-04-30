@@ -1,4 +1,5 @@
 import React from "react";
+import { usePathname } from "next/navigation";
 import { GlobeAltIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import Textarea from "./input";
 import Spinner from "../utils/spinner";
@@ -14,8 +15,14 @@ const MessageBoxCard = () => {
     isFocused,
     onFocus,
     onBlur,
+    focus,
   } = useTextarea();
   const { loading } = useSocket();
+  const pathname = usePathname();
+
+  React.useEffect(() => {
+    focus();
+  }, [pathname]);
 
   return (
     <div

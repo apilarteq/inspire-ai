@@ -4,7 +4,7 @@ import io, { Socket } from "socket.io-client";
 import { toast } from "sonner";
 import { getFingerprint } from "@thumbmarkjs/thumbmarkjs";
 import { useGlobal } from "./global";
-import { Message } from "types/message";
+import { MessageWithChatUuid } from "types/message";
 import { Error } from "types/error";
 import { config } from "config";
 import { revalidate } from "utils/lib/revalidation";
@@ -34,7 +34,8 @@ const SocketProvider = ({ children }: Props) => {
       transports: ["websocket"],
     });
 
-    newSocket.on("message-saved-successfully", (data: Message) => {
+    newSocket.on("message-saved-successfully", (data: MessageWithChatUuid) => {
+      window.history.pushState({}, "", `/chat/${data.chatUuid}`);
       addMessage(data);
     });
 
