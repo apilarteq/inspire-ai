@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import SidebarChatList from "./list";
 import { DropdownAction } from "types/dropdown";
 import { GroupedChats } from "types/chat";
@@ -11,7 +11,17 @@ interface Props {
 const SidebarChats = ({ groupedChats }: Props) => {
   const [action, setAction] = React.useState<DropdownAction | null>(null);
   const [selectedUuid, setSelectedUuid] = React.useState<string>("");
-  const params = useParams();
+  const [chatUuid, setChatUuid] = React.useState<string | null>(null);
+  const pathname = usePathname();
+
+  React.useEffect(() => {
+    const match = pathname.match(/\/chat\/([^/]+)/);
+    if (match) {
+      setChatUuid(match[1]);
+    } else {
+      setChatUuid(null);
+    }
+  }, [pathname]);
 
   const handleSelectChat = React.useCallback(
     (uuid: string) => {
@@ -47,7 +57,7 @@ const SidebarChats = ({ groupedChats }: Props) => {
           </h3>
           <SidebarChatList
             chats={group.chats}
-            currentUuid={params.uuid as string}
+            currentUuid={chatUuid ?? ""}
             selectedUuid={selectedUuid}
             action={action}
             handleClickOutside={handleClickOutside}

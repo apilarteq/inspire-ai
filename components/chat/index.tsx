@@ -33,7 +33,7 @@ const Chat = ({ messages }: Props) => {
     messages &&
     messages.length > 0 && (
       <div
-        className={`text-white w-full transition-opacity duration-1000 min-h-[calc(100vh-200px)] space-y-6 mt-5 ${
+        className={`text-white w-full transition-opacity duration-1000 min-h-[calc(100vh-200px)] h-[calc(100vh-200px)] space-y-6 pt-5 overflow-y-auto ${
           render ? "opacity-100" : "opacity-0"
         }`}
       >

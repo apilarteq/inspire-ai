@@ -54,7 +54,7 @@ export default async function RootLayout({
                 groupedChats={groupedChats ?? []}
                 isAuthenticated={verify}
               />
-              <div className="relative overflow-y-auto w-full">
+              <div className="relative overflow-hidden w-full">
                 {children}
                 <MessageBox />
               </div>
