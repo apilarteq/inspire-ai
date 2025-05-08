@@ -13,20 +13,13 @@ const SidebarChats = ({ groupedChats }: Props) => {
   const [selectedUuid, setSelectedUuid] = React.useState<string>("");
   const { chatUuid } = useGlobal();
 
-  const handleSelectChat = React.useCallback(
-    (uuid: string) => {
-      if (selectedUuid !== uuid) {
-        setSelectedUuid(uuid);
-      }
-    },
-    [selectedUuid]
-  );
+  const handleSelectChat = React.useCallback((uuid: string) => {
+    setSelectedUuid(uuid);
+  }, []);
 
   const handleClickOutside = React.useCallback(() => {
-    if (selectedUuid !== "") {
-      setSelectedUuid("");
-    }
-  }, [selectedUuid]);
+    setSelectedUuid("");
+  }, []);
 
   const handleAction = React.useCallback((action: DropdownAction | null) => {
     setAction(action);

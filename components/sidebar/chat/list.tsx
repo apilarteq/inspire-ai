@@ -33,6 +33,7 @@ const SidebarChatList = ({
           key={chat._id}
           uuid={chat._id}
           title={chat.title}
+          handleAction={props.handleAction}
         />
       );
     }
