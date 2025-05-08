@@ -6,6 +6,7 @@ import Providers from "./providers";
 import Header from "components/header";
 import MessageBox from "components/message-box";
 import Sidebar from "components/sidebar";
+import Error from "./error";
 import { loadGroupedChats, verifySession } from "utils/api";
 
 const geistSans = Geist({
@@ -34,35 +35,46 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const groupedChats = await loadGroupedChats();
-  const verify = await verifySession();
+  try {
+    const groupedChats = await loadGroupedChats();
+    const verify = await verifySession();
 
-  return (
-    <html lang="en">
+    return (
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} ${mulish.className} antialiased`}
+        >
+          <Providers>
+            <Toaster position="top-center" />
+            <main className="bg-sidebar text-black">
+              <Header isAuthenticated={verify} />
+              <section
+                data-testid="content"
+                className="bg-primary transition-all duration-500 ease-in-out flex-1 relative flex h-[calc(100vh-65px)] w-full"
+              >
+                <Sidebar
+                  groupedChats={groupedChats ?? []}
+                  isAuthenticated={verify}
+                />
+                <div className="relative overflow-hidden w-full">
+                  {children}
+                  <MessageBox />
+                </div>
+              </section>
+            </main>
+          </Providers>
+          <div id="modal-root" />
+        </body>
+      </html>
+    );
+  } catch (error) {
+    console.warn("Error loading layout:", error);
+    // Handle the error gracefully, e.g., show an error message or fallback UI
+    return <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${mulish.className} antialiased`}
       >
-        <Providers>
-          <Toaster position="top-center" />
-          <main className="bg-sidebar text-black">
-            <Header isAuthenticated={verify} />
-            <section
-              data-testid="content"
-              className="bg-primary transition-all duration-500 ease-in-out flex-1 relative flex h-[calc(100vh-65px)] w-full"
-            >
-              <Sidebar
-                groupedChats={groupedChats ?? []}
-                isAuthenticated={verify}
-              />
-              <div className="relative overflow-hidden w-full">
-                {children}
-                <MessageBox />
-              </div>
-            </section>
-          </main>
-        </Providers>
-        <div id="modal-root" />
+      <Error />
       </body>
-    </html>
-  );
+      </html>
+  }
 }

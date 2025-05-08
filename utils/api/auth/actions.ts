@@ -18,6 +18,7 @@ export async function verifySession(): Promise<boolean> {
 
     return response.success;
   } catch (error) {
+    console.log(error);
     throw error;
   }
 }
