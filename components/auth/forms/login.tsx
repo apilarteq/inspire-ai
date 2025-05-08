@@ -34,9 +34,9 @@ const LoginForm = ({ handleActiveTab }: Props) => {
     const { success, error } = await handleLogin(formData);
 
     if (!success) {
-      toast.error(error, { position: "top-center" });
+      toast.error(error);
     } else {
-      toast.success("Login exitoso", { position: "top-center" });
+      toast.success("Login exitoso");
       closeModal();
     }
   };

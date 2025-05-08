@@ -3,11 +3,12 @@ import React from "react";
 import io, { Socket } from "socket.io-client";
 import { toast } from "sonner";
 import { getFingerprint } from "@thumbmarkjs/thumbmarkjs";
+import { useRouter } from "next/navigation";
 import { useGlobal } from "./global";
-import { Message } from "types/message";
+import { MessageWithChatUuid } from "types/message";
 import { Error } from "types/error";
-import { config } from "../config";
-import { revalidate } from "utils/actions";
+import { config } from "config";
+import { revalidate } from "utils/lib/revalidation";
 
 interface SocketProps {
   socket: Socket;
@@ -26,21 +27,22 @@ export const useSocket = () => React.useContext(SocketContext);
 const SocketProvider = ({ children }: Props) => {
   const [socket, setSocket] = React.useState<Socket>({} as Socket);
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [chatUuid, setChatUuid] = React.useState<string | null>(null);
-  const { addMessage, updateStreamedMessage } = useGlobal();
+  const { addMessage, updateStreamedMessage, chatUuid, setChatUuid } =
+    useGlobal();
+  const router = useRouter();
 
   React.useEffect(() => {
     const newSocket = io(config.apiUrl, {
       transports: ["websocket"],
     });
 
-    newSocket.on("message-saved-successfully", (data: Message) => {
+    newSocket.on("message-saved-successfully", (data: MessageWithChatUuid) => {
       addMessage(data);
     });
 
     newSocket.on("error", (error: Error) => {
       setLoading(false);
-      toast.error(error.message, { position: "top-center" });
+      toast.error(error.message);
     });
 
     newSocket.on("streamed-message", (data) => {
@@ -58,8 +60,11 @@ const SocketProvider = ({ children }: Props) => {
 
     newSocket.on("end-streamed-message", (data: { chatUuid?: string }) => {
       setLoading(false);
-      revalidate("/");
-      if (data?.chatUuid) setChatUuid(data.chatUuid);
+      if (data?.chatUuid) {
+        router.push(`/chat/${data.chatUuid}`);
+        revalidate("/");
+        setChatUuid(data.chatUuid);
+      }
     });
 
     setSocket(newSocket);
@@ -67,10 +72,17 @@ const SocketProvider = ({ children }: Props) => {
     return () => {
       newSocket.disconnect();
     };
-  }, [addMessage, updateStreamedMessage]);
+  }, [addMessage, updateStreamedMessage, router, setChatUuid]);
 
   const sendMessage = React.useCallback(
     async (value: string) => {
+      if (!socket.connected) {
+        toast.error(
+          "El servicio no está disponible en este momento. Inténtalo más tarde."
+        );
+        return;
+      }
+
       const visitorId = await getFingerprint();
 
       const message = {

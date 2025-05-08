@@ -6,3 +6,7 @@ export interface Message {
   createdAt: string;
   role: Role;
 }
+
+export interface MessageWithChatUuid extends Message {
+  chatUuid: string;
+}

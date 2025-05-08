@@ -11,12 +11,10 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-primary: #1e1e1e;
-  /* --color-secondary: #dda0dd; */
-  /* --color-secondary: #e12da0; */
-  --color-secondary: #f15fb4;
+  --color-primary: #09000d;
+  --color-secondary: #a855f7;
   --color-secondary-hover: #fe88cc;
-  --color-sidebar: #333333;
+  --color-sidebar: #0a000f;
   --color-header: #373737;
   --color-auth-text-primary: #bfbfbf;
   --color-auth-text-secondary: #aaaaaa;
@@ -66,4 +64,12 @@ body {
 [contenteditable="true"]:empty:before {
   content: attr(data-placeholder);
   color: grey;
+}
+
+.markdown p:first-of-type {
+  margin-top: 0;
+}
+
+.markdown p:last-of-type {
+  margin-bottom: 0;
 }

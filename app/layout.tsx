@@ -6,7 +6,7 @@ import Providers from "./providers";
 import Header from "components/header";
 import MessageBox from "components/message-box";
 import Sidebar from "components/sidebar";
-import { loadGroupedChats, verifySession } from "utils/actions";
+import { loadGroupedChats, verifySession } from "utils/api";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,24 +43,22 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${mulish.className} antialiased`}
       >
         <Providers>
-          <Toaster />
-          <main className="h-screen w-full bg-sidebar overflow-hidden text-black">
-            <div className="flex h-full w-full">
+          <Toaster position="top-center" />
+          <main className="bg-sidebar text-black">
+            <Header isAuthenticated={verify} />
+            <section
+              data-testid="content"
+              className="bg-primary transition-all duration-500 ease-in-out flex-1 relative flex h-[calc(100vh-65px)] w-full"
+            >
               <Sidebar
                 groupedChats={groupedChats ?? []}
                 isAuthenticated={verify}
               />
-              <section
-                data-testid="content"
-                className="bg-primary transition-all duration-500 ease-in-out flex-1 relative flex flex-col h-full"
-              >
-                <Header isAuthenticated={verify} />
-                <div className="overflow-y-auto px-5 h-[calc(100vh-200px)]">
-                  {children}
-                </div>
+              <div className="relative overflow-hidden w-full">
+                {children}
                 <MessageBox />
-              </section>
-            </div>
+              </div>
+            </section>
           </main>
         </Providers>
         <div id="modal-root" />

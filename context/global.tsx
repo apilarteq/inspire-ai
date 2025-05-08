@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
-import { Message } from "types/message";
 
-type MessageBoxPosition = "center" | "bottom";
+import React from "react";
+import { usePathname } from "next/navigation";
+import { Message } from "types/message";
 
 interface GlobalContextProps {
   openSidebar: boolean;
@@ -11,10 +11,8 @@ interface GlobalContextProps {
   addMessage: (message: Message) => void;
   updateStreamedMessage: (uuid: string, content: string) => void;
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
-  messageBoxPosition: MessageBoxPosition;
-  setMessageBoxPosition: React.Dispatch<
-    React.SetStateAction<MessageBoxPosition>
-  >;
+  chatUuid: string | null;
+  setChatUuid: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 interface Props {
@@ -28,16 +26,17 @@ export const useGlobal = () => React.useContext(GlobalContext);
 const GlobalProvider = ({ children }: Props) => {
   const [openSidebar, setOpenSidebar] = React.useState<boolean>(true);
   const [messages, setMessages] = React.useState<Message[]>([]);
-  const [messageBoxPosition, setMessageBoxPosition] =
-    React.useState<MessageBoxPosition>("center");
+  const [chatUuid, setChatUuid] = React.useState<string | null>(null);
+  const pathname = usePathname();
 
   React.useEffect(() => {
-    if (messages.length > 0) {
-      setMessageBoxPosition("bottom");
+    const match = pathname.match(/\/chat\/([^/]+)/);
+    if (match) {
+      setChatUuid(match[1]);
     } else {
-      setMessageBoxPosition("center");
+      setChatUuid(null);
     }
-  }, [messages]);
+  }, [pathname]);
 
   const toggleSidebar = React.useCallback(
     () => setOpenSidebar(!openSidebar),
@@ -68,8 +67,8 @@ const GlobalProvider = ({ children }: Props) => {
       addMessage,
       updateStreamedMessage,
       setMessages,
-      messageBoxPosition,
-      setMessageBoxPosition,
+      chatUuid,
+      setChatUuid,
     }),
     [
       openSidebar,
@@ -77,8 +76,7 @@ const GlobalProvider = ({ children }: Props) => {
       messages,
       addMessage,
       updateStreamedMessage,
-      messageBoxPosition,
-      setMessageBoxPosition,
+      chatUuid,
     ]
   );
 

@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import Image from "next/image";
-import { useGlobal } from "context/global";
+import { SparklesIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
 import HeaderAuthButtons from "./auth-buttons";
-import { useAuth } from "@/context/auth";
+import { useGlobal } from "context/global";
+import { useAuth } from "context/auth";
 
 interface Props {
   isAuthenticated: boolean;
@@ -14,11 +14,11 @@ const Header = ({ isAuthenticated }: Props) => {
   const { handleLogout } = useAuth();
 
   return (
-    <header className="text-gray-100 xl:border-none xl:bg-transparent border-b border-header bg-primary py-4 px-6 sticky top-0 w-full flex justify-between">
-      <div className="flex items-center">
+    <header className="sticky top-0 w-full border-b border-zinc-800 bg-primary z-10 text-gray-100 px-10">
+      <div className="flex justify-between items-center h-16">
         <div
           className={`flex items-center ${
-            openSidebar ? "flex-row-reverse" : ""
+            openSidebar ? "flex-row-reverse" : "flex row"
           }`}
         >
           <button
@@ -31,24 +31,28 @@ const Header = ({ isAuthenticated }: Props) => {
             aria-label="Open Sidebar"
             data-testid="open-sidebar"
           >
-            <Image
-              alt="Open sidebar icon"
-              src="/sidebar-icon.svg"
-              width={26}
-              height={26}
-              className="rotate-180"
-            />
+            <ViewColumnsIcon className="w-6 h-6 text-secondary" />
           </button>
-          <h1 className="text-xl font-bold">Inspire AI</h1>
+          <div className="flex items-center">
+            <h1 className="text-2xl font-bold text-zinc-300">Inspire AI</h1>
+            <SparklesIcon className="w-7 h-7 text-secondary ml-3" />
+          </div>
         </div>
+        <div className="flex items-center gap-x-4">
+          <h3>Explorar</h3>
+          <h3>Contacto</h3>
+        </div>
+        {!isAuthenticated ? (
+          <HeaderAuthButtons />
+        ) : (
+          <button
+            className="cursor-pointer text-zinc-300"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        )}
       </div>
-      {!isAuthenticated ? (
-        <HeaderAuthButtons />
-      ) : (
-        <button className="cursor-pointer" onClick={handleLogout}>
-          Logout
-        </button>
-      )}
     </header>
   );
 };

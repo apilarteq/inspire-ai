@@ -6,9 +6,14 @@ interface Response {
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
   onPressKey: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   onSubmit: () => void;
+  isFocused: boolean;
+  onFocus: () => void;
+  onBlur: () => void;
+  focus: () => void;
 }
 
 export default function useTextarea(): Response {
+  const [isFocused, setIsFocused] = React.useState<boolean>(false);
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
   const { sendMessage } = useSocket();
 
@@ -51,5 +56,18 @@ export default function useTextarea(): Response {
     }
   };
 
-  return { handleInput, textareaRef, onPressKey, onSubmit };
+  const onFocus = () => setIsFocused(true);
+  const onBlur = () => setIsFocused(false);
+  const focus = () => textareaRef.current?.focus();
+
+  return {
+    handleInput,
+    textareaRef,
+    onPressKey,
+    onSubmit,
+    isFocused,
+    onFocus,
+    onBlur,
+    focus,
+  };
 }

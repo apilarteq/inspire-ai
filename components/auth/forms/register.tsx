@@ -32,11 +32,9 @@ const RegisterForm = ({ handleActiveTab }: Props) => {
     e.preventDefault();
     const { success, error } = await handleRegister(formData);
     if (!success) {
-      toast.error(error, { position: "top-center" });
+      toast.error(error);
     } else {
-      toast.success("Usuario registrado exitosamente", {
-        position: "top-center",
-      });
+      toast.success("Usuario registrado exitosamente");
       closeModal();
     }
   };

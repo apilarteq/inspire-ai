@@ -12,48 +12,40 @@ interface Props {
 const Chat = ({ messages }: Props) => {
   const [render, setRender] = React.useState<boolean>(false);
   const messagedEndRef = React.useRef<HTMLDivElement>(null);
-  const { setMessages, messageBoxPosition } = useGlobal();
+  const { setMessages } = useGlobal();
 
   React.useEffect(() => {
+    if (messages.length === 0) return;
+
     setMessages(messages);
-    if (messagedEndRef.current) {
-      messagedEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+    requestAnimationFrame(() => {
+      if (messagedEndRef.current) {
+        messagedEndRef.current.scrollIntoView({ behavior: "instant" });
+      }
+    });
   }, [setMessages, messages]);
 
   React.useEffect(() => {
-    let timeout: NodeJS.Timeout;
-
-    if (messageBoxPosition !== "bottom") {
-      timeout = setTimeout(() => {
-        setRender(true);
-      }, 700);
-    } else setRender(true);
-
-    return () => clearTimeout(timeout);
-  }, [messageBoxPosition]);
+    setRender(true);
+  }, []);
 
   return (
-    <div
-      className={`text-white w-full xl:mt-5 lg:mt-[10px] transition-opacity duration-1000 ${
-        render ? "opacity-100" : "opacity-0"
-      }`}
-    >
-      {messages?.map((message: Message) =>
-        message.role === "user" ? (
-          <div
-            key={message._id}
-            data-testid={message._id}
-            className="flex max-w-3xl mx-auto justify-end py-5"
-          >
+    messages.length > 0 && (
+      <div
+        className={`text-white w-full transition-opacity duration-1000 min-h-[calc(100vh-200px)] h-[calc(100vh-200px)] space-y-6 pt-5 overflow-y-auto ${
+          render ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        {messages.map((message: Message) =>
+          message.role === "user" ? (
             <UserMessage key={message._id} content={message.content} />
-          </div>
-        ) : (
-          <AssistantMessage key={message._id} content={message.content} />
-        )
-      )}
-      <div ref={messagedEndRef} />
-    </div>
+          ) : (
+            <AssistantMessage key={message._id} content={message.content} />
+          )
+        )}
+        <div ref={messagedEndRef} />
+      </div>
+    )
   );
 };
 
