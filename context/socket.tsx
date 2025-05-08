@@ -83,6 +83,13 @@ const SocketProvider = ({ children }: Props) => {
 
   const sendMessage = React.useCallback(
     async (value: string) => {
+      if (!socket.connected) {
+        toast.error(
+          "El servicio no está disponible en este momento. Inténtalo más tarde."
+        );
+        return;
+      }
+
       const visitorId = await getFingerprint();
 
       const message = {

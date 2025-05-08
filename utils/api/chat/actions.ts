@@ -22,7 +22,8 @@ export async function loadChat(uuid: string): Promise<Chat | null> {
 
     return response.data;
   } catch (error) {
-    throw error;
+    console.log(error);
+    return null;
   }
 }
 
@@ -45,7 +46,8 @@ export async function loadGroupedChats(): Promise<GroupedChats[] | null> {
 
     return response.data;
   } catch (error) {
-    throw error;
+    console.log(error);
+    return null;
   }
 }
 

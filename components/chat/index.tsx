@@ -6,7 +6,7 @@ import { useGlobal } from "context/global";
 import { Message } from "types/message";
 
 interface Props {
-  messages: Message[] | null;
+  messages: Message[];
 }
 
 const Chat = ({ messages }: Props) => {
@@ -15,7 +15,7 @@ const Chat = ({ messages }: Props) => {
   const { setMessages } = useGlobal();
 
   React.useEffect(() => {
-    if (!messages) return;
+    if (messages.length === 0) return;
 
     setMessages(messages);
     requestAnimationFrame(() => {
@@ -30,14 +30,13 @@ const Chat = ({ messages }: Props) => {
   }, []);
 
   return (
-    messages &&
     messages.length > 0 && (
       <div
         className={`text-white w-full transition-opacity duration-1000 min-h-[calc(100vh-200px)] h-[calc(100vh-200px)] space-y-6 pt-5 overflow-y-auto ${
           render ? "opacity-100" : "opacity-0"
         }`}
       >
-        {messages?.map((message: Message) =>
+        {messages.map((message: Message) =>
           message.role === "user" ? (
             <UserMessage key={message._id} content={message.content} />
           ) : (

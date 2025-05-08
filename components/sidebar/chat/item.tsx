@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 import SidebarChatOptions from "./dropdown-options";
-import { truncate } from "utils/functions";
+import { truncate } from "utils/functions/text";
 import { DropdownAction } from "types/dropdown";
 
 interface Props {

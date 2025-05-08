@@ -5,6 +5,7 @@ import { AuthResponse, LoginFormData, RegisterFormData } from "types/auth";
 import { User } from "types/user";
 import { config } from "config";
 import { revalidate } from "utils/lib/revalidation";
+import { handleFetchError } from "utils/functions/error";
 
 interface AuthContextProps {
   user: User | null;
@@ -40,6 +41,7 @@ const AuthProvider = ({ children }: Props) => {
           },
           body: JSON.stringify({ username, password, remember }),
         });
+
         const { success, error } = await req.json();
 
         if (error) return { error };
@@ -48,7 +50,7 @@ const AuthProvider = ({ children }: Props) => {
         revalidate("/");
         return { success };
       } catch (error) {
-        return { error: JSON.stringify(error) };
+        return { error: handleFetchError({ error }) };
       }
     },
     []
@@ -78,7 +80,7 @@ const AuthProvider = ({ children }: Props) => {
         revalidate("/");
         return { success };
       } catch (error) {
-        return { error: JSON.stringify(error) };
+        return { error: handleFetchError({ error }) };
       }
     },
     []
@@ -90,6 +92,7 @@ const AuthProvider = ({ children }: Props) => {
         method: "POST",
         credentials: "include",
       });
+
       const { success, error } = await req.json();
 
       if (error) return { error };
@@ -99,7 +102,7 @@ const AuthProvider = ({ children }: Props) => {
       router.push("/");
       return { success };
     } catch (error) {
-      return { error: JSON.stringify(error) };
+      return { error: handleFetchError({ error }) };
     }
   }, []);
 
