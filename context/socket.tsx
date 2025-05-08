@@ -3,7 +3,7 @@ import React from "react";
 import io, { Socket } from "socket.io-client";
 import { toast } from "sonner";
 import { getFingerprint } from "@thumbmarkjs/thumbmarkjs";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useGlobal } from "./global";
 import { MessageWithChatUuid } from "types/message";
 import { Error } from "types/error";
@@ -27,16 +27,9 @@ export const useSocket = () => React.useContext(SocketContext);
 const SocketProvider = ({ children }: Props) => {
   const [socket, setSocket] = React.useState<Socket>({} as Socket);
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [chatUuid, setChatUuid] = React.useState<string | null>(null);
-  const { addMessage, updateStreamedMessage } = useGlobal();
+  const { addMessage, updateStreamedMessage, chatUuid, setChatUuid } =
+    useGlobal();
   const router = useRouter();
-  const params = useParams();
-
-  React.useEffect(() => {
-    if (params.uuid) {
-      setChatUuid(params.uuid as string);
-    } else setChatUuid(null);
-  }, [params.uuid]);
 
   React.useEffect(() => {
     const newSocket = io(config.apiUrl, {
@@ -79,7 +72,7 @@ const SocketProvider = ({ children }: Props) => {
     return () => {
       newSocket.disconnect();
     };
-  }, [addMessage, updateStreamedMessage, router]);
+  }, [addMessage, updateStreamedMessage, router, setChatUuid]);
 
   const sendMessage = React.useCallback(
     async (value: string) => {

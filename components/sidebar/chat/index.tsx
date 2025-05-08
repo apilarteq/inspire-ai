@@ -1,8 +1,8 @@
 import React from "react";
-import { usePathname } from "next/navigation";
 import SidebarChatList from "./list";
 import { DropdownAction } from "types/dropdown";
 import { GroupedChats } from "types/chat";
+import { useGlobal } from "context/global";
 
 interface Props {
   groupedChats: GroupedChats[];
@@ -11,17 +11,7 @@ interface Props {
 const SidebarChats = ({ groupedChats }: Props) => {
   const [action, setAction] = React.useState<DropdownAction | null>(null);
   const [selectedUuid, setSelectedUuid] = React.useState<string>("");
-  const [chatUuid, setChatUuid] = React.useState<string | null>(null);
-  const pathname = usePathname();
-
-  React.useEffect(() => {
-    const match = pathname.match(/\/chat\/([^/]+)/);
-    if (match) {
-      setChatUuid(match[1]);
-    } else {
-      setChatUuid(null);
-    }
-  }, [pathname]);
+  const { chatUuid } = useGlobal();
 
   const handleSelectChat = React.useCallback(
     (uuid: string) => {

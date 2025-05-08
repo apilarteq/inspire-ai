@@ -1,5 +1,7 @@
 "use client";
+
 import React from "react";
+import { usePathname } from "next/navigation";
 import { Message } from "types/message";
 
 interface GlobalContextProps {
@@ -9,6 +11,8 @@ interface GlobalContextProps {
   addMessage: (message: Message) => void;
   updateStreamedMessage: (uuid: string, content: string) => void;
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+  chatUuid: string | null;
+  setChatUuid: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 interface Props {
@@ -22,6 +26,17 @@ export const useGlobal = () => React.useContext(GlobalContext);
 const GlobalProvider = ({ children }: Props) => {
   const [openSidebar, setOpenSidebar] = React.useState<boolean>(true);
   const [messages, setMessages] = React.useState<Message[]>([]);
+  const [chatUuid, setChatUuid] = React.useState<string | null>(null);
+  const pathname = usePathname();
+
+  React.useEffect(() => {
+    const match = pathname.match(/\/chat\/([^/]+)/);
+    if (match) {
+      setChatUuid(match[1]);
+    } else {
+      setChatUuid(null);
+    }
+  }, [pathname]);
 
   const toggleSidebar = React.useCallback(
     () => setOpenSidebar(!openSidebar),
@@ -52,8 +67,17 @@ const GlobalProvider = ({ children }: Props) => {
       addMessage,
       updateStreamedMessage,
       setMessages,
+      chatUuid,
+      setChatUuid,
     }),
-    [openSidebar, toggleSidebar, messages, addMessage, updateStreamedMessage]
+    [
+      openSidebar,
+      toggleSidebar,
+      messages,
+      addMessage,
+      updateStreamedMessage,
+      chatUuid,
+    ]
   );
 
   return (
