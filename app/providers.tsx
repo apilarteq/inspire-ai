@@ -10,13 +10,13 @@ interface Props {
 
 const Providers: React.FC<Props> = ({ children }) => {
   return (
-    <AuthProvider>
-      <ModalProvider>
-        <GlobalProvider>
+    <GlobalProvider>
+      <AuthProvider>
+        <ModalProvider>
           <SocketProvider>{children}</SocketProvider>
-        </GlobalProvider>
-      </ModalProvider>
-    </AuthProvider>
+        </ModalProvider>
+      </AuthProvider>
+    </GlobalProvider>
   );
 };
 

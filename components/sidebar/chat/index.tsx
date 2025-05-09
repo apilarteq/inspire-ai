@@ -1,6 +1,6 @@
 import React from "react";
 import SidebarChatList from "./list";
-import DeleteChatForm from "../form/delete";
+import DeleteChatForm from "./forms/delete";
 import { DropdownAction } from "types/dropdown";
 import { GroupedChats, SelectedChat } from "types/chat";
 import { useGlobal } from "context/global";
@@ -33,7 +33,9 @@ const SidebarChats = ({ groupedChats }: Props) => {
         openModal(
           <DeleteChatForm chat={selectedChat} currentChatUuid={chatUuid} />
         );
+        setSelectedChat({} as SelectedChat);
       }
+
       if (action === null) setSelectedChat({} as SelectedChat);
     },
     [selectedChat, openModal, chatUuid]

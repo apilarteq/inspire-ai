@@ -1,4 +1,5 @@
 "use server";
+
 import { cookies } from "next/headers";
 import { Chat, GroupedChats } from "types/chat";
 import { config } from "config";

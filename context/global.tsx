@@ -3,6 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import { Message } from "types/message";
+import { Chat } from "types/chat";
 
 interface GlobalContextProps {
   openSidebar: boolean;
@@ -11,6 +12,8 @@ interface GlobalContextProps {
   addMessage: (message: Message) => void;
   updateStreamedMessage: (uuid: string, content: string) => void;
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+  chats: Chat[] | null;
+  setChats: React.Dispatch<React.SetStateAction<Chat[] | null>>;
   chatUuid: string | null;
   setChatUuid: React.Dispatch<React.SetStateAction<string | null>>;
 }
@@ -26,6 +29,7 @@ export const useGlobal = () => React.useContext(GlobalContext);
 const GlobalProvider = ({ children }: Props) => {
   const [openSidebar, setOpenSidebar] = React.useState<boolean>(true);
   const [messages, setMessages] = React.useState<Message[]>([]);
+  const [chats, setChats] = React.useState<Chat[] | null>(null);
   const [chatUuid, setChatUuid] = React.useState<string | null>(null);
   const pathname = usePathname();
 
@@ -67,6 +71,8 @@ const GlobalProvider = ({ children }: Props) => {
       addMessage,
       updateStreamedMessage,
       setMessages,
+      chats,
+      setChats,
       chatUuid,
       setChatUuid,
     }),
@@ -77,6 +83,7 @@ const GlobalProvider = ({ children }: Props) => {
       addMessage,
       updateStreamedMessage,
       chatUuid,
+      chats,
     ]
   );
 
