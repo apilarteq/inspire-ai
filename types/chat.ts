@@ -11,3 +11,8 @@ export interface GroupedChats {
   date: string;
   chats: Chat[];
 }
+
+export interface SelectedChat {
+  _id: string;
+  title: string;
+}

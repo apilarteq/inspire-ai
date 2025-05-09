@@ -2,10 +2,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Modal from "components/utils/modal";
+import { ModalOptions } from "types/modal";
 
 interface ModalProps {
-  openModal: (component: React.ReactNode) => void;
+  openModal: (component: React.ReactNode, options?: ModalOptions) => void;
   closeModal: () => void;
+}
+
+interface ModalState {
+  open: boolean;
+  component: React.ReactNode | null;
+  options: ModalOptions;
 }
 
 interface Props {
@@ -18,23 +25,38 @@ export const useModal = () => React.useContext(ModalContext);
 
 const ModalProvider = ({ children }: Props) => {
   const [isClient, setIsClient] = React.useState<boolean>(false);
-  const [open, setOpen] = React.useState<boolean>(false);
-  const [component, setComponent] = React.useState<React.ReactNode | null>(
-    null
-  );
+  const [modalState, setModalState] = React.useState<ModalState>({
+    open: false,
+    component: null,
+    options: {
+      darkenBackground: true,
+    },
+  });
 
   React.useEffect(() => {
     setIsClient(true);
   }, []);
 
-  const openModal = React.useCallback((component: React.ReactNode) => {
-    setComponent(component);
-    setOpen(true);
-  }, []);
+  const openModal = React.useCallback(
+    (component: React.ReactNode, options?: ModalOptions) => {
+      setModalState({
+        open: true,
+        component,
+        options: {
+          darkenBackground: options?.darkenBackground ?? true,
+          maxSize: options?.maxSize ?? 512,
+        },
+      });
+    },
+    []
+  );
 
   const closeModal = React.useCallback(() => {
-    setComponent(null);
-    setOpen(false);
+    setModalState({
+      open: false,
+      component: null,
+      options: {},
+    });
   }, []);
 
   const modalProviderValue = React.useMemo(
@@ -50,8 +72,12 @@ const ModalProvider = ({ children }: Props) => {
       {children}
       {isClient &&
         ReactDOM.createPortal(
-          <Modal open={open} onClose={closeModal}>
-            {component}
+          <Modal
+            open={modalState.open}
+            onClose={closeModal}
+            options={modalState.options}
+          >
+            {modalState.component}
           </Modal>,
           document.getElementById("modal-root") ?? document.body
         )}

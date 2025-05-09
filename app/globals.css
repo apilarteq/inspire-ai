@@ -19,7 +19,7 @@
   --color-auth-text-primary: #bfbfbf;
   --color-auth-text-secondary: #aaaaaa;
   --color-auth-input-border: #555555;
-  --color-auth-input-bg: #3a3a3a;
+  --color-auth-input-bg: #2e2e2e;
 }
 
 @media (prefers-color-scheme: dark) {

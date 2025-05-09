@@ -15,18 +15,18 @@ const Auth = ({ openTab }: Props) => {
   const handleActiveTab = (tab: "login" | "register") => setActiveTab(tab);
 
   return (
-    <>
+    <div className="p-6">
       <div className="mb-6">
         <AuthTabs activeTab={activeTab} handleActiveTab={handleActiveTab} />
       </div>
-      <div className="transition-all duration-300 bg-[#2a2a2a]">
+      <div className="transition-all duration-300 bg-[#18181b]">
         {activeTab === "login" ? (
           <LoginForm handleActiveTab={handleActiveTab} />
         ) : (
           <RegisterForm handleActiveTab={handleActiveTab} />
         )}
       </div>
-    </>
+    </div>
   );
 };
 

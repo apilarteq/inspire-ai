@@ -2,14 +2,18 @@ import React from "react";
 import { toast } from "sonner";
 import { updateChatTitle } from "utils/api";
 import { revalidate } from "utils/lib/revalidation";
+import { DropdownAction } from "types/dropdown";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 interface Props {
   uuid: string;
   title: string;
+  handleAction: (action: DropdownAction | null) => void;
 }
 
-const SidebarChatEditableItem = ({ uuid, title }: Props) => {
+const SidebarChatEditableItem = ({ uuid, title, handleAction }: Props) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const ref = useClickOutside<HTMLLIElement>(() => handleAction(null));
 
   React.useEffect(() => {
     if (inputRef.current) {
@@ -44,6 +48,7 @@ const SidebarChatEditableItem = ({ uuid, title }: Props) => {
 
   return (
     <li
+      ref={ref}
       key={uuid}
       className="flex items-center rounded-md hover:bg-[#3c3939] p-2 active:bg-[#342f2f] transition-colors duration-200 cursor-pointer relative"
     >

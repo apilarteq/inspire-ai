@@ -1,4 +1,5 @@
 "use server";
+
 import { cookies } from "next/headers";
 import { Chat, GroupedChats } from "types/chat";
 import { config } from "config";
@@ -14,6 +15,7 @@ export async function loadChat(uuid: string): Promise<Chat | null> {
         Cookie: cookieStore.toString(),
       },
     });
+
     const response = await req.json();
 
     if (!response.success) {
@@ -38,6 +40,7 @@ export async function loadGroupedChats(): Promise<GroupedChats[] | null> {
         Cookie: cookieStore.toString(),
       },
     });
+
     const response = await req.json();
 
     if (!response.success) {
@@ -66,6 +69,27 @@ export async function updateChatTitle(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ title }),
+    });
+
+    const response = await req.json();
+
+    return response.success;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
+export async function deleteChat(uuid: string): Promise<boolean> {
+  try {
+    const cookieStore = await cookies();
+
+    const req = await fetch(`${config.apiUrl}/chat/${uuid}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
     });
 
     const response = await req.json();

@@ -1,12 +1,10 @@
 "use client";
-import React, { PropsWithChildren } from "react";
+
+import React from "react";
 import Link from "next/link";
-import {
-  MagnifyingGlassIcon,
-  PencilSquareIcon,
-  ViewColumnsIcon,
-} from "@heroicons/react/24/outline";
+import { PencilSquareIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
 import SidebarChats from "./chat";
+import SidebarChatSearch from "./search";
 import { GroupedChats } from "types/chat";
 import { useGlobal } from "context/global";
 
@@ -15,11 +13,16 @@ interface Props {
   isAuthenticated: boolean;
 }
 
-const Sidebar: React.FC<PropsWithChildren<Props>> = ({
-  groupedChats,
-  isAuthenticated,
-}) => {
-  const { toggleSidebar, openSidebar } = useGlobal();
+const Sidebar = ({ groupedChats, isAuthenticated }: Props) => {
+  const { toggleSidebar, openSidebar, setChats } = useGlobal();
+
+  React.useEffect(() => {
+    if (!isAuthenticated) return;
+
+    const chats = groupedChats.map((chat) => chat.chats);
+
+    setChats(chats.flat());
+  }, [isAuthenticated, groupedChats, setChats]);
 
   return (
     <aside
@@ -51,13 +54,7 @@ const Sidebar: React.FC<PropsWithChildren<Props>> = ({
               <PencilSquareIcon className="w-6 h-6 text-secondary" />
             </Link>
           </div>
-          <button
-            className="p-1 rounded-md hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
-            aria-label="Open Search Modal"
-            data-testid="open-search-modal"
-          >
-            <MagnifyingGlassIcon className="w-6 h-6 text-secondary" />
-          </button>
+          <SidebarChatSearch />
         </header>
         <SidebarChats groupedChats={groupedChats} />
       </div>
