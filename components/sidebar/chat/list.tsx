@@ -2,7 +2,7 @@ import React from "react";
 import SidebarChatItem from "./item";
 import SidebarChatEditableItem from "./editable-item";
 import { DropdownAction } from "types/dropdown";
-import { Chat } from "types/chat";
+import { Chat, SelectedChat } from "types/chat";
 
 interface Props {
   chats: Chat[];
@@ -11,7 +11,7 @@ interface Props {
   action: DropdownAction | null;
   handleClickOutside: () => void;
   handleAction: (action: DropdownAction | null) => void;
-  handleSelectChat: (uuid: string) => void;
+  handleSelectChat: (chat: SelectedChat) => void;
 }
 
 const SidebarChatList = ({

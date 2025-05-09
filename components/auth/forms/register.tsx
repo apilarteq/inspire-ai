@@ -20,6 +20,7 @@ const RegisterForm = ({ handleActiveTab }: Props) => {
   });
   const { closeModal } = useModal();
   const { handleRegister } = useAuth();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({

@@ -28,7 +28,7 @@ const AuthInputs = ({ formData, onFormChange }: Props) => {
           required
           value={formData.username}
           onChange={onFormChange}
-          className="w-full px-3 py-2 border border-auth-input-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-auth-input-border bg-auth-input-bg"
+          className="w-full px-3 py-2 border border-auth-input-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:border-auth-input-border bg-auth-input-bg"
           placeholder="ej: silver123"
         />
       </div>
@@ -48,7 +48,7 @@ const AuthInputs = ({ formData, onFormChange }: Props) => {
             required
             value={formData.password}
             onChange={onFormChange}
-            className="w-full px-3 py-2 border border-auth-input-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-auth-input-border bg-auth-input-bg"
+            className="w-full px-3 py-2 border border-auth-input-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:border-auth-input-border bg-auth-input-bg"
             placeholder={showPassword ? "my-password" : "•••••••••••"}
           />
           <button

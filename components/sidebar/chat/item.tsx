@@ -4,6 +4,7 @@ import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 import SidebarChatOptions from "./dropdown-options";
 import { truncate } from "utils/functions/text";
 import { DropdownAction } from "types/dropdown";
+import { SelectedChat } from "types/chat";
 
 interface Props {
   uuid: string;
@@ -12,7 +13,7 @@ interface Props {
   selectedUuid: string;
   handleClickOutside: () => void;
   handleAction: (action: DropdownAction) => void;
-  handleSelectChat: (uuid: string) => void;
+  handleSelectChat: (chat: SelectedChat) => void;
 }
 
 const SidebarChatItem = ({ uuid, title, currentUuid, ...props }: Props) => {
@@ -38,7 +39,7 @@ const SidebarChatItem = ({ uuid, title, currentUuid, ...props }: Props) => {
         </button>
       </Link>
       <button
-        onClick={() => props.handleSelectChat(uuid)}
+        onClick={() => props.handleSelectChat({ _id: uuid, title })}
         className={`cursor-pointer hover:bg-purple-900/60 rounded-full mr-1 ${
           props.selectedUuid === uuid && "bg-purple-900/60"
         }`}
