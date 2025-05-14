@@ -177,7 +177,7 @@ export function fromNow(
   if (daysElapsed > 0 && daysElapsed <= 7) {
     return shortFormat
       ? `${daysElapsed}${t.shortUnits.days}`
-      : `${t.ago} ${daysElapsed} ${t.days}${daysElapsed > 1 ? "s" : ""}`;
+      : `${daysElapsed} ${t.days}${daysElapsed > 1 ? "s" : ""} ${t.ago}`;
   }
 
   // Weeks (up to 4)
@@ -185,7 +185,7 @@ export function fromNow(
   if (weeksElapsed > 0 && weeksElapsed <= 4) {
     return shortFormat
       ? `${weeksElapsed}${t.shortUnits.weeks}`
-      : `${t.ago} ${weeksElapsed} ${t.weeks}${weeksElapsed > 1 ? "s" : ""}`;
+      : `${weeksElapsed} ${t.weeks}${weeksElapsed > 1 ? "s" : ""} ${t.ago}`;
   }
 
   // Months
@@ -195,7 +195,7 @@ export function fromNow(
   if (monthsElapsed > 0) {
     return shortFormat
       ? `${monthsElapsed}${t.shortUnits.months}`
-      : `${t.ago} ${monthsElapsed} ${t.months}${monthsElapsed > 1 ? "s" : ""}`;
+      : `${monthsElapsed} ${t.months}${monthsElapsed > 1 ? "s" : ""} ${t.ago}`;
   }
 
   // Years
@@ -203,7 +203,7 @@ export function fromNow(
   if (yearsElapsed > 0) {
     return shortFormat
       ? `${yearsElapsed}${t.shortUnits.years}`
-      : `${t.ago} ${yearsElapsed} ${t.years}${yearsElapsed > 1 ? "s" : ""}`;
+      : `${yearsElapsed} ${t.years}${yearsElapsed > 1 ? "s" : ""} ${t.ago}`;
   }
 
   // Fallback to localized date

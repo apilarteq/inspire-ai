@@ -1,4 +1,4 @@
-export type Role = "user" | "assistant";
+export type Role = "user" | "model";
 
 export interface Message {
   _id: string;

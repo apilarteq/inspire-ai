@@ -1,6 +1,6 @@
 import React from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
-import SearchForm from "./forms/search";
+import SearchForm from "./forms";
 import { useModal } from "context/modal";
 
 const SidebarChatSearch = () => {
