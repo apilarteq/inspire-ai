@@ -20,6 +20,7 @@ const SidebarChatItem = ({ uuid, title, currentUuid, ...props }: Props) => {
   return (
     <li
       key={uuid}
+      data-testid="chat-item"
       className={`flex items-center rounded-md transition-colors duration-200 cursor-pointer relative ${
         currentUuid === uuid
           ? "bg-purple-900/30 hover:bg-purple-900/40 active:bg-purple-900/60 !text-purple-300"
@@ -31,12 +32,9 @@ const SidebarChatItem = ({ uuid, title, currentUuid, ...props }: Props) => {
         data-testid="chat-link"
         className="w-[calc(100%-20px)]"
       >
-        <button
-          className="block p-2 w-full text-left cursor-pointer text-nowrap"
-          disabled={currentUuid === uuid}
-        >
+        <span className="block p-2 w-full text-left cursor-pointer text-nowrap">
           {truncate(title, 20)}
-        </button>
+        </span>
       </Link>
       <button
         onClick={() => props.handleSelectChat({ _id: uuid, title })}

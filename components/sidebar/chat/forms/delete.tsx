@@ -42,7 +42,10 @@ const DeleteChatForm = ({ chat, currentChatUuid }: Props) => {
   };
 
   return (
-    <div className="w-full rounded-xl shadow-xl overflow-hidden border border-gray-700 text-white">
+    <div
+      data-testid="delete-chat-form"
+      className="w-full rounded-xl shadow-xl overflow-hidden border border-gray-700 text-white"
+    >
       <div className="p-5 border-b border-gray-700/50">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-red-500/10 rounded-full">
