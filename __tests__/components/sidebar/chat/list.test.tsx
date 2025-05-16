@@ -1,5 +1,5 @@
-import { Chat } from "@/types/chat";
 import { render, screen } from "@testing-library/react";
+import { Chat } from "types/chat";
 import SidebarChatList from "components/sidebar/chat/list";
 
 jest.mock("components/sidebar/chat/item", () => {
