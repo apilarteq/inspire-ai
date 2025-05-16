@@ -11,14 +11,20 @@ const HighlightedMessage = ({ message, searchTerm }: Props) => {
 
   if (snippet.match === "") {
     return (
-      <span className="text-sm text-gray-500 dark:text-gray-400 truncate">
+      <span
+        data-testid="highlighted-message"
+        className="text-sm text-gray-500 dark:text-gray-400 truncate"
+      >
         {snippet.before}
       </span>
     );
   }
 
   return (
-    <span className="text-sm text-gray-500 dark:text-gray-400">
+    <span
+      data-testid="highlighted-message"
+      className="text-sm text-gray-500 dark:text-gray-400"
+    >
       {snippet.before.length > snippet.after.length && "..."}
       {snippet.before}
       <span className="text-white dark:text-white font-semibold">
