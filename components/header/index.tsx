@@ -17,6 +17,7 @@ const Header = ({ isAuthenticated }: Props) => {
     <header className="sticky top-0 w-full border-b border-zinc-800 bg-primary z-10 text-gray-100 px-10">
       <div className="flex justify-between items-center h-16">
         <div
+          data-testid="header-left-side"
           className={`flex items-center ${
             openSidebar ? "flex-row-reverse" : "flex row"
           }`}
