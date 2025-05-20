@@ -42,6 +42,7 @@ const AuthInputs = ({ formData, onFormChange }: Props) => {
         </label>
         <div className="relative">
           <input
+            data-testid="password-input"
             id="password"
             name="password"
             type={showPassword ? "text" : "password"}

@@ -30,13 +30,18 @@ const RegisterForm = ({ handleActiveTab }: Props) => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const { success, error } = await handleRegister(formData);
-    if (!success) {
-      toast.error(error);
-    } else {
-      toast.success("Usuario registrado exitosamente");
-      closeModal();
+    try {
+      e.preventDefault();
+      const { success, error } = await handleRegister(formData);
+      if (!success) {
+        toast.error(error);
+      } else {
+        toast.success("Usuario registrado exitosamente");
+        closeModal();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to register");
     }
   };
 

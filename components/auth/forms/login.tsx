@@ -30,14 +30,19 @@ const LoginForm = ({ handleActiveTab }: Props) => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const { success, error } = await handleLogin(formData);
+    try {
+      e.preventDefault();
+      const { success, error } = await handleLogin(formData);
 
-    if (!success) {
-      toast.error(error);
-    } else {
-      toast.success("Login exitoso");
-      closeModal();
+      if (!success) {
+        toast.error(error);
+      } else {
+        toast.success("Login exitoso");
+        closeModal();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to login");
     }
   };
 
