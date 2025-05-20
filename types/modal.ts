@@ -1,4 +1,4 @@
 export interface ModalOptions {
   darkenBackground?: boolean;
-  maxSize?: number;
+  maxSize?: number | string;
 }
