@@ -26,6 +26,7 @@ const MessageBoxCard = () => {
 
   return (
     <div
+      data-testid="message-box-card"
       className={`w-full bg-[#18181b] rounded-xl p-3 text-left text-gray-300 space-y-3 ${
         isFocused && "ring-2 ring-secondary"
       }`}
