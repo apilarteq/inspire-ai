@@ -4,6 +4,7 @@ import { SparklesIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
 import HeaderAuthButtons from "./auth-buttons";
 import { useGlobal } from "context/global";
 import { useAuth } from "context/auth";
+import SocialIcons from "./social-icons";
 
 interface Props {
   isAuthenticated: boolean;
@@ -39,10 +40,7 @@ const Header = ({ isAuthenticated }: Props) => {
             <SparklesIcon className="w-7 h-7 text-secondary ml-3" />
           </div>
         </div>
-        <div className="flex items-center gap-x-4">
-          <h3>Explorar</h3>
-          <h3>Contacto</h3>
-        </div>
+        <SocialIcons />
         {!isAuthenticated ? (
           <HeaderAuthButtons />
         ) : (
