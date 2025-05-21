@@ -27,9 +27,14 @@ describe("Header", () => {
   it("Should render", () => {
     render(<Header isAuthenticated={false} />);
 
+    const icons = screen.getAllByRole("link");
+    expect(icons).toHaveLength(2);
+    expect(icons[0]).toHaveAttribute("href", "https://github.com/apilarteq");
+    expect(icons[1]).toHaveAttribute(
+      "href",
+      "https://www.linkedin.com/in/apilarte/"
+    );
     expect(screen.getByText("Inspire AI")).toBeInTheDocument();
-    expect(screen.getByText("Explorar")).toBeInTheDocument();
-    expect(screen.getByText("Contacto")).toBeInTheDocument();
     expect(screen.getAllByRole("button")).toHaveLength(3);
     expect(screen.getByText("Sign in")).toBeInTheDocument();
     expect(screen.getByText("Sign up")).toBeInTheDocument();
