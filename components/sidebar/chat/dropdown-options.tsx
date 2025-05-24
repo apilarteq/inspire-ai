@@ -1,5 +1,5 @@
-import { useClickOutside } from "@/hooks/useClickOutside";
 import React from "react";
+import { useClickOutside } from "hooks/useClickOutside";
 import { DropdownAction } from "types/dropdown";
 
 interface Props {
@@ -12,6 +12,7 @@ const SidebarChatOptions = ({ handleClickOutside, handleAction }: Props) => {
 
   return (
     <div
+      data-testid="dropdown-options"
       ref={ref}
       className="absolute right-0 top-12 w-42 bg-zinc-900 border-zinc-800 border flex flex-col justify-center rounded-md z-20 text-gray-100"
     >

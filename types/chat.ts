@@ -4,6 +4,7 @@ export interface Chat {
   _id: string;
   title: string;
   createdAt: string;
+  message: string;
   messages?: Message[];
 }
 

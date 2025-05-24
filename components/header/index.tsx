@@ -4,6 +4,7 @@ import { SparklesIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
 import HeaderAuthButtons from "./auth-buttons";
 import { useGlobal } from "context/global";
 import { useAuth } from "context/auth";
+import SocialIcons from "./social-icons";
 
 interface Props {
   isAuthenticated: boolean;
@@ -17,6 +18,7 @@ const Header = ({ isAuthenticated }: Props) => {
     <header className="sticky top-0 w-full border-b border-zinc-800 bg-primary z-10 text-gray-100 px-10">
       <div className="flex justify-between items-center h-16">
         <div
+          data-testid="header-left-side"
           className={`flex items-center ${
             openSidebar ? "flex-row-reverse" : "flex row"
           }`}
@@ -38,10 +40,7 @@ const Header = ({ isAuthenticated }: Props) => {
             <SparklesIcon className="w-7 h-7 text-secondary ml-3" />
           </div>
         </div>
-        <div className="flex items-center gap-x-4">
-          <h3>Explorar</h3>
-          <h3>Contacto</h3>
-        </div>
+        <SocialIcons />
         {!isAuthenticated ? (
           <HeaderAuthButtons />
         ) : (

@@ -12,10 +12,11 @@ interface GlobalContextProps {
   addMessage: (message: Message) => void;
   updateStreamedMessage: (uuid: string, content: string) => void;
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
-  chats: Chat[] | null;
   setChats: React.Dispatch<React.SetStateAction<Chat[] | null>>;
   chatUuid: string | null;
   setChatUuid: React.Dispatch<React.SetStateAction<string | null>>;
+  filterChats: (searchTerm: string) => Chat[] | null;
+  addChats: (chatsToAdd: Chat[]) => void;
 }
 
 interface Props {
@@ -63,6 +64,31 @@ const GlobalProvider = ({ children }: Props) => {
     []
   );
 
+  const filterChats = React.useCallback(
+    (searchTerm: string): Chat[] | null => {
+      if (!chats) return null;
+
+      const lowerSearch = searchTerm.toLowerCase();
+
+      return chats.filter(
+        (chat) =>
+          chat.title.toLowerCase().includes(lowerSearch) ||
+          chat.message?.toLowerCase().includes(lowerSearch)
+      );
+    },
+    [chats]
+  );
+
+  const addChats = React.useCallback(
+    (chatsToAdd: Chat[]) => {
+      const newChats = chatsToAdd.filter(
+        (chat) => !chats?.some((c) => c._id === chat._id)
+      );
+      setChats((prev) => [...prev!, ...newChats]);
+    },
+    [chats]
+  );
+
   const globalProviderValue = React.useMemo(
     () => ({
       openSidebar,
@@ -71,10 +97,11 @@ const GlobalProvider = ({ children }: Props) => {
       addMessage,
       updateStreamedMessage,
       setMessages,
-      chats,
       setChats,
       chatUuid,
       setChatUuid,
+      filterChats,
+      addChats,
     }),
     [
       openSidebar,
@@ -83,7 +110,8 @@ const GlobalProvider = ({ children }: Props) => {
       addMessage,
       updateStreamedMessage,
       chatUuid,
-      chats,
+      filterChats,
+      addChats,
     ]
   );
 

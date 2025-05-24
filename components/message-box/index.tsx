@@ -9,6 +9,7 @@ const MessageBox = () => {
 
   return (
     <div
+      data-testid="message-box"
       className={`flex justify-center left-0 right-0 mx-auto transition-all bg-primary duration-700 ease-in-out opacity-100 px-5 pb-5 ${
         messages.length === 0
           ? "absolute bottom-1/2 translate-y-1/2"

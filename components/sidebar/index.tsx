@@ -5,7 +5,7 @@ import Link from "next/link";
 import { PencilSquareIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
 import SidebarChats from "./chat";
 import SidebarChatSearch from "./search";
-import { GroupedChats } from "types/chat";
+import { Chat, GroupedChats } from "types/chat";
 import { useGlobal } from "context/global";
 
 interface Props {
@@ -21,7 +21,14 @@ const Sidebar = ({ groupedChats, isAuthenticated }: Props) => {
 
     const chats = groupedChats.map((chat) => chat.chats);
 
-    setChats(chats.flat());
+    const searchChats: Chat[] = chats.flat().map((chat) => ({
+      _id: chat._id,
+      title: chat.title,
+      createdAt: chat.createdAt,
+      message: chat.message,
+    }));
+
+    setChats(searchChats);
   }, [isAuthenticated, groupedChats, setChats]);
 
   return (

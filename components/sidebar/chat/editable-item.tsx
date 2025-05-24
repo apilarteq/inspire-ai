@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { updateChatTitle } from "utils/api";
 import { revalidate } from "utils/lib/revalidation";
 import { DropdownAction } from "types/dropdown";
-import { useClickOutside } from "@/hooks/useClickOutside";
+import { useClickOutside } from "hooks/useClickOutside";
 
 interface Props {
   uuid: string;
@@ -54,6 +54,7 @@ const SidebarChatEditableItem = ({ uuid, title, handleAction }: Props) => {
     >
       <input ref={inputRef} type="text" defaultValue={title} className="z-20" />
       <div
+        data-testid="outside-clickable"
         className="fixed w-screen h-screen z-10 inset-0 cursor-default"
         onClick={handleSave}
       />

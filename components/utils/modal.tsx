@@ -40,7 +40,13 @@ const Modal: React.FC<Props> = ({ open, onClose, children, ...props }) => {
           className="flex min-h-full items-center justify-center text-center p-0"
         >
           <div
-            style={{ maxWidth: props.options.maxSize }}
+            data-testid="modal-children-wrapper"
+            style={{
+              maxWidth:
+                typeof props.options.maxSize === "number"
+                  ? `${props.options.maxSize}px`
+                  : props.options.maxSize,
+            }}
             className={`relative transform overflow-hidden bg-[#18181b] text-left rounded-lg transition-all sm:my-8 w-full sm:mx-0 mx-8 ${
               open
                 ? "opacity-100 translate-y-0 sm:scale-100 ease-out duration-300"

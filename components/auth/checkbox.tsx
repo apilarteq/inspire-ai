@@ -50,14 +50,14 @@ const Checkboxes = ({ checked, onFormChange, register = false }: Props) => {
         </label>
       </div>
 
-      <div className="text-sm">
+      {/* <div className="text-sm">
         <a
           href="#"
           className="font-medium text-secondary hover:text-secondary-hover cursor-pointer"
         >
           ¿Olvidaste tu contraseña?
         </a>
-      </div>
+      </div> */}
     </div>
   );
 };
