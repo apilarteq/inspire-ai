@@ -38,6 +38,7 @@ export default async function RootLayout({
 }>) {
   const groupedChats = await loadGroupedChats();
   const verify = await verifySession();
+  console.log("verify", verify);
 
   return (
     <html lang="en">

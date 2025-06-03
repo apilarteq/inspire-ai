@@ -5,6 +5,7 @@ import { config } from "config";
 export async function verifySession(): Promise<boolean> {
   try {
     const cookieStore = await cookies();
+    console.log("Cookie", cookieStore.toString());
 
     const req = await fetch(`${config.apiUrl}/auth/verify`, {
       method: "GET",
@@ -15,6 +16,7 @@ export async function verifySession(): Promise<boolean> {
     });
 
     const response = await req.json();
+    console.log("verify response", response);
 
     return response.success;
   } catch (error) {
